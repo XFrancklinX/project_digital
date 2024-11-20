@@ -19,11 +19,19 @@
         @yield('sidebar-nav')
 
         <div class="main-container">
-        @yield('content')
+            @yield('content')
         </div>
     </div>
-
+    
     @include('includes.js')
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                autoWidth: false,
+                responsive: true,
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -6,3 +6,7 @@
 
 <!-- Main Js Required -->
 <script src="js/main.js"></script>
+
+<!-- Data Tables -->
+<script src="components/datatables/dataTables.min.js"></script>
+<script src="components/datatables/dataTables.bootstrap.min.js"></script>

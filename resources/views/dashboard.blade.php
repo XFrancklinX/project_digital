@@ -17,9 +17,16 @@
         <div class="sidebarMenuScroll">
             <ul>
                 <li class="active-page-link">
-                    <a href="starter-page.html">
+                    <a href="{{route('dashboard')}}">
                         <i class="bi bi-house"></i>
                         <span class="menu-text">Principal</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('correspondencia')}}">
+                        <i class="bi bi-stickies"></i>
+                        <span class="menu-text">Correspondencia</span>
                     </a>
                 </li>
             </ul>
@@ -118,8 +125,9 @@ $unidades = Unidad::all();
                     @endforeach
                 </div>
             </div>
-            
+
             <div class="col-sm-6 col-12 border border-5">
+
             </div>
         </div>
     </div>
