@@ -26,7 +26,14 @@
                 <li>
                     <a href="{{route('correspondencia')}}">
                         <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Correspondencia</span>
+                        <span class="menu-text">Digitalización</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('gestion')}}">
+                        <i class="bi bi-diagram-3"></i>
+                        <span class="menu-text">Gestión</span>
                     </a>
                 </li>
             </ul>
@@ -52,7 +59,13 @@ $unidades = Unidad::all();
 
     <!-- Welcome start -->
     <div class="welcome-note">
-        Bienvenido, <span>{{Persona::find(Auth::user()->personas_id)->nombres}}</span>
+        Bienvenido, <span>
+            @if(Auth::user()->personas_id != null)
+            {{Persona::find(Auth::user()->personas_id)->nombres}}
+            @else
+            {{Auth::user()->email}}
+            @endif
+        </span>
     </div>
     <!-- Welcome end -->
 
@@ -63,7 +76,13 @@ $unidades = Unidad::all();
         <ul class="header-actions">
             <li class="dropdown">
                 <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
-                    <span class="user-name d-none d-md-block">{{Persona::find(Auth::user()->personas_id)->nombres}}</span>
+                    <span class="user-name d-none d-md-block">
+                        @if(Auth::user()->personas_id != null)
+                        {{Persona::find(Auth::user()->personas_id)->nombres}}
+                        @else
+                        {{Auth::user()->email}}
+                        @endif
+                    </span>
                     <span class="avatar">
                         <img src="images/user.png" alt="Admin Templates">
                         <span class="status online"></span>

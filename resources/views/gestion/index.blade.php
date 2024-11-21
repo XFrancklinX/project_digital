@@ -23,14 +23,14 @@
                     </a>
                 </li>
 
-                <li class="active-page-link">
+                <li>
                     <a href="{{route('correspondencia')}}">
                         <i class="bi bi-stickies"></i>
                         <span class="menu-text">Correspondencia</span>
                     </a>
                 </li>
 
-                <li>
+                <li class="active-page-link">
                     <a href="{{route('gestion')}}">
                         <i class="bi bi-diagram-3"></i>
                         <span class="menu-text">Gestión</span>
@@ -47,15 +47,9 @@
 @php
 use App\Models\Persona;
 use App\Models\Unidad;
-use App\Models\Categoria;
-use App\Models\Institucion;
 use App\Models\Documento;
-use App\Models\User;
 
 $unidades = Unidad::all();
-$categorias = Categoria::all();
-$personas = Persona::all();
-$instituciones = Institucion::all();
 @endphp
 
 <!-- Page header starts -->
@@ -69,7 +63,7 @@ $instituciones = Institucion::all();
             <i class="bi bi-house"></i>
             <a href="index.html">Principal</a>
         </li>
-        <li class="breadcrumb-item breadcrumb-active" aria-current="page">Correspondencia</li>
+        <li class="breadcrumb-item breadcrumb-active" aria-current="page">Gestión</li>
     </ol>
 
     <!-- Header actions ccontainer start -->
@@ -122,21 +116,20 @@ $instituciones = Institucion::all();
                         Agregar
                     </button>
                 </div>
-                @include('includes.add')
                 <div class="card-body">
                     <div class="custom-tabs-container">
                         <ul class="nav nav-tabs" id="customTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="tab-one" data-bs-toggle="tab" href="#one" role="tab"
-                                    aria-controls="one" aria-selected="true">Archivos Totales</a>
+                                    aria-controls="one" aria-selected="true">Personas</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="tab-two" data-bs-toggle="tab" href="#two" role="tab"
-                                    aria-controls="two" aria-selected="false">Archivos Internos</a>
+                                    aria-controls="two" aria-selected="false">Unidades</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="tab-three" data-bs-toggle="tab" href="#three" role="tab"
-                                    aria-controls="three" aria-selected="false">Archivos Externos</a>
+                                    aria-controls="three" aria-selected="false">Categorias</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="customTabContent">

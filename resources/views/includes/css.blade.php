@@ -10,3 +10,6 @@
 <!-- Data Tables -->
 <link rel="stylesheet" href="components/datatables/dataTables.bs5.css" />
 <link rel="stylesheet" href="components/datatables/dataTables.bs5-custom.css" />
+
+<!-- Bootstrap Select CSS -->
+<link rel="stylesheet" href="components/bs-select/bs-select.css" />
