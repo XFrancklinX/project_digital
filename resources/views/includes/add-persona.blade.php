@@ -6,17 +6,66 @@
             aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <div class="row">
-            <div class="col-sm-12 col-12 mb-3">
-                <div class="m-0">
-                    <label class="form-label d-flex">Persona</label>
-                    <select class="select-persona js-states form-control select-single" title="Seleccione la Persona"
-                        data-live-search="true" required="">
-                        @foreach ($personas as $persona)
-                        <option value="{{$persona->id}}">{{$persona->nombres}} {{$persona->apell_pat}} {{$persona->apell_mat}}</option>
-                        @endforeach
-                    </select>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 col-12 mb-3">
+                        <label for="" class="form-label">Nombre(s)</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
+                    <div class="col-sm-6 col-12 mb-3">
+                        <label for="" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
+                    <div class="col-sm-6 col-12 mb-3">
+                        <label for="" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
+                    <div class="col-sm-6 col-12 mb-3">
+                        <label for="" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-12 mb-3">
+                        <label for="" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-12 mb-3">
+                        <div class="m-0">
+                            <label class="form-label d-flex">Unidad Administrativa</label>
+                            <select class="select-unidad-panel js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                data-live-search="true" name="unidades_id" id="offunidades_id" required="">
+                                <option value="0">Seleccionar</option>
+                                @foreach ($unidades as $unidad)
+                                <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-12 mb-3">
+                        <div class="m-0">
+                            <label class="form-label d-flex">Cargo</label>
+                            <select class="select-cargo js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                data-live-search="true" name="cargos_id" id="cargos_id" required="">
+                                <option value="0">Seleccionar</option>
+                                @foreach ($cargos as $cargo)
+                                <option value="{{$cargo->id}}">{{$cargo->id}}. {{$cargo->descrip}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-end">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="offcanvas">Close</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="offcanvas"
+                    data-bs-dismiss="modal">Agregar</button>
             </div>
         </div>
     </div>

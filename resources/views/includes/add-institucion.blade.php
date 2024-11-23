@@ -6,17 +6,23 @@
             aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <div class="row">
-            <div class="col-sm-12 col-12 mb-3">
-                <div class="m-0">
-                    <label class="form-label d-flex">Institucion</label>
-                    <select class="select-institucion js-states form-control select-single" title="Seleccione la Institución"
-                        data-live-search="true" required="">
-                        @foreach ($instituciones as $institucion)
-                        <option value="{{$institucion->id}}">{{$institucion->descrip}}</option>
-                        @endforeach
-                    </select>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-12 mb-3">
+                        <label for="" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
+                    <div class="col-sm-6 col-12 mb-3">
+                        <label for="" class="form-label">Ciudad</label>
+                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                    </div>
                 </div>
+            </div>
+            <div class="card-footer text-end">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="offcanvas">Close</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="offcanvas"
+                    data-bs-dismiss="modal">Agregar</button>
             </div>
         </div>
     </div>

@@ -48,8 +48,10 @@
 use App\Models\Persona;
 use App\Models\Unidad;
 use App\Models\Documento;
+use App\Models\Cargo;
 
 $unidades = Unidad::all();
+$cargos = Cargo::all();
 @endphp
 
 <!-- Page header starts -->
@@ -109,13 +111,6 @@ $unidades = Unidad::all();
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-info add" id="add" data-bs-toggle="modal"
-                        data-bs-target="#modal-add">
-                        <i class="bi bi-plus-square"></i>
-                        Agregar
-                    </button>
-                </div>
                 <div class="card-body">
                     <div class="custom-tabs-container">
                         <ul class="nav nav-tabs" id="customTab" role="tablist">
@@ -131,9 +126,19 @@ $unidades = Unidad::all();
                                 <a class="nav-link" id="tab-three" data-bs-toggle="tab" href="#three" role="tab"
                                     aria-controls="three" aria-selected="false">Categorias</a>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab-four" data-bs-toggle="tab" href="#four" role="tab"
+                                    aria-controls="four" aria-selected="false">Instituciones</a>
+                            </li>
                         </ul>
+                        @include('includes.add-gestion')
+
                         <div class="tab-content" id="customTabContent">
                             <div class="tab-pane fade show active" id="one" role="tabpanel">
+                                <button class="btn btn-info mb-3" id="btn-personas">
+                                    <i class="bi bi-plus-square"></i>
+                                    Agregar
+                                </button>
                                 <table class="table table-bordered" id="table1" style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -167,6 +172,10 @@ $unidades = Unidad::all();
                             </div>
 
                             <div class="tab-pane fade" id="two" role="tabpanel">
+                                <button class="btn btn-info mb-3" id="btn-unidades">
+                                    <i class="bi bi-plus-square"></i>
+                                    Agregar
+                                </button>
                                 <table class="table table-bordered" id="table2" style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -200,6 +209,47 @@ $unidades = Unidad::all();
                             </div>
 
                             <div class="tab-pane fade" id="three" role="tabpanel">
+                                <button class="btn btn-info mb-3" id="btn-categorias">
+                                    <i class="bi bi-plus-square"></i>
+                                    Agregar
+                                </button>
+                                <table class="table table-bordered" id="table3" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Unidad</th>
+                                            <th>Fecha</th>
+                                            <th>Destinatario</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Documento 1</td>
+                                            <td>Unidad 1</td>
+                                            <td>Fecha 1</td>
+                                            <td>Destinatario 1</td>
+                                            <td>
+                                                <button class="btn btn-info">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                    Editar
+                                                </button>
+                                                <button class="btn btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="four" role="tabpanel">
+                                <button class="btn btn-info mb-3" id="btn-instituciones">
+                                    <i class="bi bi-plus-square"></i>
+                                    Agregar
+                                </button>
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>

@@ -51,11 +51,13 @@ use App\Models\Categoria;
 use App\Models\Institucion;
 use App\Models\Documento;
 use App\Models\User;
+use App\Models\Cargo;
 
 $unidades = Unidad::all();
 $categorias = Categoria::all();
 $personas = Persona::all();
 $instituciones = Institucion::all();
+$cargos = Cargo::all();
 @endphp
 
 <!-- Page header starts -->
