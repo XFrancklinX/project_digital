@@ -528,6 +528,7 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
     public static $classMap = array (
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DataController' => __DIR__ . '/../..' . '/app/Http/Controllers/DataController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Livewire\\Actions\\Logout' => __DIR__ . '/../..' . '/app/Livewire/Actions/Logout.php',
         'App\\Livewire\\Forms\\LoginForm' => __DIR__ . '/../..' . '/app/Livewire/Forms/LoginForm.php',

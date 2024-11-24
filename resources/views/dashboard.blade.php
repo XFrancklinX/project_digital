@@ -109,11 +109,11 @@ $unidades = Unidad::all();
     <!-- Content wrapper start -->
     <div class="content-wrapper">
         <!-- Row start -->
-        <div class="col-sm-12 col-12 border border-5 d-xxl-flex d-xl-flex d-sm-block">
-            <div class="col-sm-6 col-12 border border-5">
+        <div class="col-sm-12 col-12 d-xxl-flex d-xl-flex d-sm-block">
+            <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
                 <!-- Row start -->
                 <div class="row">
-                    <div class="col-xxl-3 col-xl-6 col-sm-6 col-12">
+                    <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
                         <div class="stats-tile">
                             <div class="sale-icon-bdr">
                                 <i class="bi bi-file-earmark-text"></i>
@@ -128,7 +128,7 @@ $unidades = Unidad::all();
                     </div>
 
                     @foreach ($unidades as $data)
-                    <div class="col-xxl-3 col-xl-6 col-sm-6 col-12">
+                    <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
                         <div class="stats-tile">
                             <div class="sale-icon-bdr">
                                 <i class="bi bi-file-earmark-text"></i>
@@ -145,7 +145,7 @@ $unidades = Unidad::all();
                 </div>
             </div>
 
-            <div class="col-sm-6 col-12 border border-5">
+            <div class="col-sm-6 col-12">
 
             </div>
         </div>

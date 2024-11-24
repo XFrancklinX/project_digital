@@ -26,7 +26,7 @@
                 <li>
                     <a href="{{route('correspondencia')}}">
                         <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Correspondencia</span>
+                        <span class="menu-text">Digitalización</span>
                     </a>
                 </li>
 
@@ -47,11 +47,16 @@
 @php
 use App\Models\Persona;
 use App\Models\Unidad;
+use App\Models\Categoria;
 use App\Models\Documento;
 use App\Models\Cargo;
+use App\Models\Institucion;
 
+$personas = Persona::all();
 $unidades = Unidad::all();
+$categorias = Categoria::all();
 $cargos = Cargo::all();
+$instituciones = Institucion::all();
 @endphp
 
 <!-- Page header starts -->
@@ -70,7 +75,7 @@ $cargos = Cargo::all();
 
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
-        <div class="toggle-sidebar" id="toggle-sidebar"><i class="bi bi-list"></i></div>
+        
 
         <!-- Header actions start -->
         <ul class="header-actions">
@@ -142,31 +147,33 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table1" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
+                                            <th>N°</th>
+                                            <th>Nombre(s) y Apellido(s)</th>
                                             <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>Cargo</th>
+                                            <th>Teléfono</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($personas as $persona)
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $persona->nombres }} {{ $persona->apell_pat }} {{ $persona->apell_mat }}</td>
+                                            <td>{{ Unidad::find($persona->unidades_id)->descrip }}</td>
+                                            <td>{{ Cargo::find($persona->cargos_id)->descrip }}</td>
+                                            <td>{{ $persona->telefono }}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info" type="button">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button class="btn btn-sm btn-danger" type="button">
                                                     <i class="bi bi-trash"></i>
-                                                    Eliminar
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -179,31 +186,30 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table2" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
-                                            <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>N°</th>
+                                            <th>Descripción</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($unidades as $unidad)
+                                            
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $unidad->descrip }}</td>
+                                            <td>{{ $unidad->estado }}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button class="btn btn-sm btn-danger">
                                                     <i class="bi bi-trash"></i>
-                                                    Eliminar
                                                 </button>
-                                            </td>
+                                            </td>   
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -216,31 +222,32 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
+                                            <th>N°</th>
+                                            <th>Descripción</th>
+                                            <th>Sigla</th>
                                             <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($categorias as $categoria)
+                                            
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $categoria->descrip }}</td>
+                                            <td>{{ $categoria->sigla }}</td>
+                                            <td>{{ Unidad::find($categoria->unidades_id)->descrip }}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button class="btn btn-sm btn-danger">
                                                     <i class="bi bi-trash"></i>
-                                                    Eliminar
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -253,31 +260,32 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
-                                            <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>N°</th>
+                                            <th>Descripción</th>
+                                            <th>Ciudad</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($instituciones as $institucion)
+                                            
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $institucion->descrip }}</td>
+                                            <td>{{ $institucion->ciudad }}</td>
+                                            <td>{{ $institucion->estado }}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button class="btn btn-sm btn-danger">
                                                     <i class="bi bi-trash"></i>
-                                                    Eliminar
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

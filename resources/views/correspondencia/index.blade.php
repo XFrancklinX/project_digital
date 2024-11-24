@@ -26,7 +26,7 @@
                 <li class="active-page-link">
                     <a href="{{route('correspondencia')}}">
                         <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Correspondencia</span>
+                        <span class="menu-text">Digitalización</span>
                     </a>
                 </li>
 
@@ -76,7 +76,7 @@ $cargos = Cargo::all();
 
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
-        <div class="toggle-sidebar" id="toggle-sidebar"><i class="bi bi-list"></i></div>
+        
 
         <!-- Header actions start -->
         <ul class="header-actions">
