@@ -26,7 +26,7 @@
                 <li class="active-page-link">
                     <a href="{{route('correspondencia')}}">
                         <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Correspondencia</span>
+                        <span class="menu-text">Digitalización</span>
                     </a>
                 </li>
 
@@ -57,6 +57,9 @@ $unidades = Unidad::all();
 $categorias = Categoria::all();
 $personas = Persona::all();
 $instituciones = Institucion::all();
+$documentos = Documento::where('estado', '=', 'A')->get();
+$documentos1 = Documento::where('tipo_doc', '=', 'INTERNA')->where('estado', '=', 'A')->get();
+$documentos2 = Documento::where('tipo_doc', '=', 'EXTERNA')->where('estado', '=', 'A')->get();
 $cargos = Cargo::all();
 @endphp
 
@@ -76,7 +79,7 @@ $cargos = Cargo::all();
 
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
-        <div class="toggle-sidebar" id="toggle-sidebar"><i class="bi bi-list"></i></div>
+
 
         <!-- Header actions start -->
         <ul class="header-actions">
@@ -114,6 +117,8 @@ $cargos = Cargo::all();
 
     <!-- Content wrapper start -->
     <div class="content-wrapper">
+        <div id="modal-content">
+        </div>
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
             <div class="card">
@@ -146,31 +151,37 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table1" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
-                                            <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>N°</th>
+                                            <th>Codigo</th>
+                                            <th>CITE</th>
+                                            <th>Referencia</th>
+                                            <th>Tipo</th>
+                                            <th>Registro</th>
+                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($documentos as $documento)
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$documento->codigo}}</td>
+                                            <td>{{$documento->identificador}}</td>
+                                            <td>{{$documento->referencia}}</td>
+                                            <td>{{$documento->tipo_doc}}</td>
+                                            <td>{{$documento->fecha_reg}}</td>
+                                            <td>{{$documento->gestion}}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                    Eliminar
+                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
+                                                    <i class="bi bi-x-square"></i>
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -179,31 +190,37 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table2" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
-                                            <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>N°</th>
+                                            <th>Codigo</th>
+                                            <th>CITE</th>
+                                            <th>Referencia</th>
+                                            <th>Tipo</th>
+                                            <th>Registro</th>
+                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($documentos1 as $documento)
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$documento->codigo}}</td>
+                                            <td>{{$documento->identificador}}</td>
+                                            <td>{{$documento->referencia}}</td>
+                                            <td>{{$documento->tipo_doc}}</td>
+                                            <td>{{$documento->fecha_reg}}</td>
+                                            <td>{{$documento->gestion}}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                    Eliminar
+                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
+                                                    <i class="bi bi-x-square"></i>
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -212,31 +229,37 @@ $cargos = Cargo::all();
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Documento</th>
-                                            <th>Unidad</th>
-                                            <th>Fecha</th>
-                                            <th>Destinatario</th>
+                                            <th>N°</th>
+                                            <th>Codigo</th>
+                                            <th>CITE</th>
+                                            <th>Referencia</th>
+                                            <th>Tipo</th>
+                                            <th>Registro</th>
+                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @foreach($documentos2 as $documento)
                                         <tr>
-                                            <td>Documento 1</td>
-                                            <td>Unidad 1</td>
-                                            <td>Fecha 1</td>
-                                            <td>Destinatario 1</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$documento->codigo}}</td>
+                                            <td>{{$documento->identificador}}</td>
+                                            <td>{{$documento->referencia}}</td>
+                                            <td>{{$documento->tipo_doc}}</td>
+                                            <td>{{$documento->fecha_reg}}</td>
+                                            <td>{{$documento->gestion}}</td>
                                             <td>
-                                                <button class="btn btn-info">
+                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
-                                                    Editar
                                                 </button>
-                                                <button class="btn btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                    Eliminar
+                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
+                                                    <i class="bi bi-x-square"></i>
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

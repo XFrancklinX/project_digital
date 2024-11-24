@@ -58,7 +58,7 @@
     @include('includes.js')
     <script>
         $(document).ready(function() {
-            $('.table').DataTable({
+            var table = $('.table').DataTable({
                 autoWidth: false,
                 responsive: true,
             });
@@ -80,25 +80,36 @@
 
                 // Aplica el borde rojo al contenedor de select2 justo después de la inicialización
                 $(this).find('.select-unidad, .select-persona, .select-institucion').next('.select2').find('.select2-selection').css('border', '1px solid red');
+                //$('.addCorrespondencia').attr('disabled', true);
             });
 
             $('#modal-add').on('hidden.bs.modal', function() {
                 $('.filepdf').text('No se subió ningún archivo');
+                $('#form-add')[0].reset();
             });
 
             $('#file').change(function() {
-                var fileName = $(this).prop('files')[0];
-                if (fileName) { // Si se seleccionó un archivo
-                    fileName = fileName.name; // Obtener el nombre del archivo seleccionado
-                    $('.filepdf').html('Archivo Subido Exitosamente <br>Nombre del Archivo: ' + fileName); // Mostrar el nombre del archivo en el elemento .filepdf
-                } else { // Si no se seleccionó ningún archivo
-                    $('.filepdf').text('No se subió ningún archivo'); // Mostrar el mensaje de error
+                var files = $(this).prop('files');
+                if (files.length > 0) {
+                    var fileNames = '';
+
+                    for (var i = 0; i < files.length; i++) {
+                        fileNames += 'Archivo ' + (i + 1) + ': ' + files[i].name + '<br>';
+                    }
+                    $('.filepdf').html('Archivos Subidos Exitosamente <br>' + fileNames);
+                } else {
+                    $('.filepdf').text('No se subió ningún archivo');
                 }
             });
 
 
+            var unidades_id;
+            var personas_id;
+            var categorias_id;
+            var instituciones_id;
+            var select_cont = 0;
             $('#unidades_id').on('change', function() {
-                var unidades_id = $(this).val();
+                unidades_id = $(this).val();
 
                 $.ajax({
                     url: "{{ route('get.categorias') }}",
@@ -112,13 +123,149 @@
                             $('.select-unidad').next('.select2').find('.select2-selection').css('border', '1px solid green');
 
                             $('#categorias_id').empty();
+                            $('#categorias_id').append('<option value="0">Seleccionar</option>');
                             $.each(response, function(index, value) {
                                 $('#categorias_id').append('<option value="' + value.id + '">' + (index + 1) + '. ' + value.descrip + '</option>');
                             });
+                            $('.select-categoria').next('.select2').find('.select2-selection').css('border', '1px solid red');
                         } else {
+                            select_cont--;
                             $('#categorias_id').empty();
                             $('.select-unidad').next('.select2').find('.select2-selection').css('border', '1px solid red');
                         }
+                    },
+                });
+            });
+
+
+            $('#categorias_id').on('change', function() {
+                categorias_id = $(this).val();
+                if (categorias_id != 0) {
+                    $('.select-categoria').next('.select2').find('.select2-selection').css('border', '1px solid green');
+                } else {
+                    $('.select-categoria').next('.select2').find('.select2-selection').css('border', '1px solid red');
+                }
+            });
+
+            $('#personas_id').on('change', function() {
+                personas_id = $(this).val();
+                if (personas_id != 0) {
+                    $('.select-persona').next('.select2').find('.select2-selection').css('border', '1px solid green');
+                } else {
+                    $('.select-persona').next('.select2').find('.select2-selection').css('border', '1px solid red');
+                }
+            });
+
+            $('#instituciones_id').on('change', function() {
+                instituciones_id = $(this).val();
+
+                if (instituciones_id != 0) {
+                    $('.select-institucion').next('.select2').find('.select2-selection').css('border', '1px solid green');
+                } else {
+                    $('.select-institucion').next('.select2').find('.select2-selection').css('border', '1px solid red');
+                }
+            });
+
+            $('#off-add-personas').on('submit', function(e) {
+                e.preventDefault();
+
+                var form = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('personas.store') }}",
+                    type: 'POST',
+                    data: form,
+                    success: function(response) {
+                        if (response.success) {
+                            $('.select-persona').append('<option value="' + response.id + '">' + response.id + '. ' + response.nombres + ' ' + response.apell_pat + ' ' + response.apell_mat + '</option>');
+
+                            $('#add-persona').offcanvas('hide');
+
+                            $('#off-add-personas')[0].reset();
+                            console.log("Modal no se cierra:", $('#add-persona').hasClass('offcanvas-show'));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Hubo un error en la solicitud.');
+                    }
+                });
+            })
+
+            $('#off-add-personas').on('submit', function(e) {
+                e.preventDefault();
+
+                var form = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('personas.store') }}",
+                    type: 'POST',
+                    data: form,
+                    success: function(response) {
+                        if (response.success) {
+                            $('.select-persona').append('<option value="' + response.id + '">' + response.id + '. ' + response.nombres + ' ' + response.apell_pat + ' ' + response.apell_mat + '</option>');
+
+                            $('#add-persona').offcanvas('hide');
+
+                            $('#off-add-personas')[0].reset();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Hubo un error en la solicitud.');
+                    }
+                });
+            })
+
+            $('#off-add-institucions').on('submit', function(e) {
+                e.preventDefault();
+
+                var form = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('institucions.store') }}",
+                    type: 'POST',
+                    data: form,
+                    success: function(response) {
+                        if (response.success) {
+                            $('.select-institucion').append('<option value="' + response.id + '">' + response.descrip + '</option>');
+
+                            $('#add-institucion').offcanvas('hide');
+
+                            $('#off-add-institucions')[0].reset();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Hubo un error en la solicitud.');
+                    }
+                });
+            })
+
+            $('.table').on('click', '.edit', function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('correspondencia.edit', 'id') }}".replace('id', id),
+                    type: 'GET',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function(response) {
+                        $('#modal-content').html(response);
+                        $('#modal-edit-correspondencia').modal('show');
+                    },
+                });
+            });
+
+            $('.table').on('click', '.anule', function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('correspondencia.anule', 'id') }}".replace('id', id),
+                    type: 'GET',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function(response) {
+                        window.location.reload();
                     },
                 });
             });
@@ -129,26 +276,6 @@
                     dropdownParent: $('#modal-add-gestion .modal-body'),
                 });
             });
-
-            $('#personas_id').on('change', function() {
-                var personas_id = $(this).val();
-                if (personas_id != 0) {
-                    $('.select-persona').next('.select2').find('.select2-selection').css('border', '1px solid green');
-                } else {
-                    $('.select-persona').next('.select2').find('.select2-selection').css('border', '1px solid red');
-                }
-            });
-
-            $('#instituciones_id').on('change', function() {
-                var instituciones_id = $(this).val();
-
-                if (instituciones_id != 0) {
-                    $('.select-institucion').next('.select2').find('.select2-selection').css('border', '1px solid green');
-                } else {
-                    $('.select-institucion').next('.select2').find('.select2-selection').css('border', '1px solid red');
-                }
-            });
-
             $('#btn-personas').on('click', function() {
                 $('#section-personas').show();
                 $('#section-unidades, #section-categorias, #section-instituciones').hide();

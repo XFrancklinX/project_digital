@@ -111,6 +111,7 @@ return new class extends Migration
             $table->date('fecha_reg');
             $table->text('archivo');
             $table->text('gestion');
+            $table->enum('estado', ['A', 'B'])->default('A');
             $table->unsignedBigInteger('institucions_id')->nullable();
             $table->unsignedBigInteger('unidades_id')->nullable();
             $table->unsignedBigInteger('categorias_id')->nullable();

@@ -7,23 +7,25 @@
     </div>
     <div class="offcanvas-body">
         <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12 col-12 mb-3">
-                        <label for="" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
-                    </div>
-                    <div class="col-sm-6 col-12 mb-3">
-                        <label for="" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="" name="" placeholder="" required="">
+            <form action="{{route('institucions.store')}}" method="POST" enctype="multipart/form-data" id="off-add-institucions">
+                @csrf
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-12 mb-3">
+                            <label for="" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" id="descrip" name="descrip" placeholder="" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <div class="col-sm-12 col-12 mb-3">
+                            <label for="" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="" oninput="this.value = this.value.toUpperCase()">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer text-end">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="offcanvas">Close</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="offcanvas"
-                    data-bs-dismiss="modal">Agregar</button>
-            </div>
+                <div class="card-footer text-end">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="offcanvas">Cerrar</button>
+                    <button type="submit" class="btn btn-success">Agregar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
