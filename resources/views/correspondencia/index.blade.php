@@ -80,7 +80,6 @@ $cargos = Cargo::all();
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
 
-
         <!-- Header actions start -->
         <ul class="header-actions">
             <li class="dropdown">
