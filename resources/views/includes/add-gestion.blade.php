@@ -1,7 +1,19 @@
+<style>
+    .row {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(-1 * var(--bs-gutter-y));
+        margin-right: calc(-0.5 * var(--bs-gutter-x));
+        margin-left: calc(-0.5 * var(--bs-gutter-x));
+    }
+</style>
+
 <!-- Modal 2 -->
 <div class="modal fade" id="modal-add-gestion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <div id="tittle-personas">
@@ -19,40 +31,113 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="section-personas">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6 col-12 mb-3">
-                                <label for="" class="form-label">Nombre(s)</label>
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                <form action="{{route('gestion.personas.store')}}" method="post">
+                    @csrf
+                    <div id="section-personas">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <label for="" class="form-label">Nombre(s)</label>
+                                    <input type="text" class="form-control" id="nombres" name="nombres" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <label for="" class="form-label">Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="apell_pat" name="apell_pat" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <label for="" class="form-label">Apellido Materno</label>
+                                    <input type="text" class="form-control" id="apell_mat" name="apell_mat" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <label for="" class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="" required="">
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-12 mb-3">
-                                <label for="" class="form-label">Apellido Paterno</label>
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-12 mb-3 px-1">
+                                    <label for="" class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-12 mb-3">
-                                <label for="" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
-                            </div>
-                            <div class="col-sm-6 col-12 mb-3">
-                                <label for="" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
+
+                            <div class="row">
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <div class="m-0">
+                                        <label class="form-label">Unidad Administrativa</label>
+                                        <select class="select-unidad-add js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="unidades_id" id="unidades_id" required="">
+                                            <option value="0">Seleccionar</option>
+                                            @foreach ($unidades as $unidad)
+                                            <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                    <div class="m-0">
+                                        <label class="form-label">Cargo&nbsp;</label>
+                                        <select class="select-cargo-add js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="cargos_id" id="cargos_id" required="">
+                                            <option value="0">Seleccionar</option>
+                                            @foreach ($cargos as $cargo)
+                                            <option value="{{$cargo->id}}">{{$cargo->id}}. {{$cargo->descrip}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success">Agregar</button>
+                        </div>
+                    </div>
+                </form>
 
+                <form action="{{route('gestion.unidades.store')}}" method="post">
+                    @csrf
+                    <div id="section-unidades">
                         <div class="row">
                             <div class="col-sm-12 col-12 mb-3">
-                                <label for="" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                                <label for="" class="form-label">Nueva Unidad</label>
+                                <input type="text" class="form-control" id="descrip" name="descrip" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success">Agregar</button>
+                        </div>
+                    </div>
+                </form>
 
+                <form action="{{route('gestion.categorias.store')}}" method="post">
+                    @csrf
+                    <div id="section-categorias">
+                        <div class="row" id="row-categorias">
+                            <label for="" class="form-label col-sm-8 col-12">Nueva Categoria</label>
+                            <label for="" class="form-label col-sm-2 col-12">Sigla</label>
+
+                            <div class="col-sm-8 col-12 mb-3 p-1">
+                                <input type="text" class="form-control" id="descrip" name="descrip[]" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+
+                            <div class="col-sm-2 col-12 mb-3 p-1">
+                                <input type="text" class="form-control" id="sigla" name="sigla[]" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-6 mb-3 p-1">
+                                <button type="button" class="btn btn-info" id="btn-add-categoria"><i class="bi bi-plus-square"></i></button>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6 col-12 mb-3">
                                 <div class="m-0">
                                     <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-panel js-states form-control select-single" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="offunidades_id" required="">
+                                    <select class="select-unidad-add2 js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                        data-live-search="true" name="unidades_id" id="unidades_id" required="">
                                         <option value="0">Seleccionar</option>
                                         @foreach ($unidades as $unidad)
                                         <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
@@ -60,63 +145,33 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-sm-6 col-12 mb-3">
-                                <div class="m-0">
-                                    <label class="form-label d-flex">Cargo</label>
-                                    <select class="select-cargo js-states form-control select-single" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="cargos_id" id="cargos_id" required="">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($cargos as $cargo)
-                                        <option value="{{$cargo->id}}">{{$cargo->id}}. {{$cargo->descrip}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success btn-add-categoria" disabled>Agregar</button>
                         </div>
                     </div>
-                </div>
-
-                <div id="section-unidades">
-                    <div class="row">
-                        <div class="col-sm-12 col-12 mb-3">
-                            <label for="" class="form-label">Nueva Unidad</label>
-                            <input type="text" class="form-control" id="" name="" placeholder="" required="">
-                        </div>
-                    </div>
-                </div>
-                <div id="section-categorias">
-                    <div class="row" id="row-categorias">
-                        <div class="col-sm-12 col-12 mb-3">
-                            <label for="" class="form-label col-sm-12 col-12">Nueva Categoria</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="" name="" placeholder="" required="">
-                            </div>
-                        </div>
+                </form>
+                
+                <form action="{{route('gestion.institucions.store')}}" method="post">
+                    @csrf
+                    <div id="section-instituciones">
                         <div class="row">
-                            <div class="col-sm-6 col-12 mb-3">
-                                <button type="button" class="btn btn-info" id="btn-add-categoria"><i class="bi bi-plus-square"></i></button>
+                            <div class="col-sm-12 col-12 mb-3">
+                                <label for="" class="form-label">Nueva Institución</label>
+                                <input type="text" class="form-control" id="descrip" name="descrip" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="col-sm-12 col-12 mb-3">
+                                <label for="" class="form-label">Ciudad</label>
+                                <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div id="section-instituciones">
-                    <div class="row">
-                        <div class="col-sm-12 col-12 mb-3">
-                            <label for="" class="form-label">Nueva Institución</label>
-                            <input type="text" class="form-control" id="" name="" placeholder="" required="">
-                        </div>
-                        <div class="col-sm-12 col-12 mb-3">
-                            <label for="" class="form-label">Ciudad</label>
-                            <input type="text" class="form-control" id="" name="" placeholder="" required="">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success">Agregar</button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Agregar</button>
+                </form>
             </div>
         </div>
     </div>

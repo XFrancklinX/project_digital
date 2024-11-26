@@ -28,8 +28,25 @@ Route::post('personas_store', [DataController::class, 'personas_store'])->name('
 //Institucions
 Route::post('institucions_store', [DataController::class, 'institucions_store'])->name('institucions.store');
 
-
+//Gestion
 Route::view('gestion', 'gestion.index')->name('gestion');
+Route::post('gestion_personas_store', [DataController::class, 'gestion_personas_store'])->name('gestion.personas.store');
+Route::post('gestion_institucions_store', [DataController::class, 'gestion_institucions_store'])->name('gestion.institucions.store');
+Route::post('gestion_categorias_store', [DataController::class, 'gestion_categorias_store'])->name('gestion.categorias.store');
+Route::post('gestion_unidades_store', [DataController::class, 'gestion_unidades_store'])->name('gestion.unidades.store');
+Route::get('gestion_edit', [DataController::class, 'gestion_edit'])->name('gestion.edit');
+Route::post('gestion_personas_update', [DataController::class, 'gestion_personas_update'])->name('gestion.personas.update');
+Route::post('gestion_unidades_update', [DataController::class, 'gestion_unidades_update'])->name('gestion.unidades.update');
+Route::post('gestion_categorias_update', [DataController::class, 'gestion_categorias_update'])->name('gestion.categorias.update');
+Route::post('gestion_institucions_update', [DataController::class, 'gestion_institucions_update'])->name('gestion.institucions.update');
+
+
+//Reportes
+Route::view('reportes', 'reportes.index')->name('reportes');
+Route::get('reportes_data', [DataController::class, 'reportes_data'])->name('reportes.data');
+
+//Perfil
+Route::get('perfil', [DataController::class, 'perfil'])->name('perfil');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

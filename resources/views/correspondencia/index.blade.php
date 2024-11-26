@@ -36,6 +36,13 @@
                         <span class="menu-text">Gestión</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('reportes')}}">
+                        <i class="bi bi-graph-up"></i>
+                        <span class="menu-text">Reportes</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -98,7 +105,7 @@ $cargos = Cargo::all();
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
-                        <a href="profile.html">Perfil</a>
+                        <a href="{{route('perfil')}}">Perfil</a>
                         <a href="login.html">Salir</a>
                     </div>
                 </div>

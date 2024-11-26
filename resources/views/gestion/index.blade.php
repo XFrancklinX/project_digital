@@ -36,6 +36,13 @@
                         <span class="menu-text">Gestión</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('reportes')}}">
+                        <i class="bi bi-graph-up"></i>
+                        <span class="menu-text">Reportes</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -75,7 +82,7 @@ $instituciones = Institucion::all();
 
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
-        
+
 
         <!-- Header actions start -->
         <ul class="header-actions">
@@ -95,7 +102,7 @@ $instituciones = Institucion::all();
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
-                        <a href="profile.html">Perfil</a>
+                        <a href="{{route('perfil')}}">Perfil</a>
                         <a href="login.html">Salir</a>
                     </div>
                 </div>
@@ -116,178 +123,181 @@ $instituciones = Institucion::all();
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="custom-tabs-container">
-                        <ul class="nav nav-tabs" id="customTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="tab-one" data-bs-toggle="tab" href="#one" role="tab"
-                                    aria-controls="one" aria-selected="true">Personas</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="tab-two" data-bs-toggle="tab" href="#two" role="tab"
-                                    aria-controls="two" aria-selected="false">Unidades</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="tab-three" data-bs-toggle="tab" href="#three" role="tab"
-                                    aria-controls="three" aria-selected="false">Categorias</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="tab-four" data-bs-toggle="tab" href="#four" role="tab"
-                                    aria-controls="four" aria-selected="false">Instituciones</a>
-                            </li>
-                        </ul>
-                        @include('includes.add-gestion')
+                <div class="card-header">
+                    <div id="modal-content"></div>
+                    <div class="card-body">
+                        <div class="custom-tabs-container">
+                            <ul class="nav nav-tabs" id="customTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="tab-one" data-bs-toggle="tab" href="#one" role="tab"
+                                        aria-controls="one" aria-selected="true">Personas</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="tab-two" data-bs-toggle="tab" href="#two" role="tab"
+                                        aria-controls="two" aria-selected="false">Unidades</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="tab-three" data-bs-toggle="tab" href="#three" role="tab"
+                                        aria-controls="three" aria-selected="false">Categorias</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="tab-four" data-bs-toggle="tab" href="#four" role="tab"
+                                        aria-controls="four" aria-selected="false">Instituciones</a>
+                                </li>
+                            </ul>
+                            @include('includes.add-gestion')
 
-                        <div class="tab-content" id="customTabContent">
-                            <div class="tab-pane fade show active" id="one" role="tabpanel">
-                                <button class="btn btn-info mb-3" id="btn-personas">
-                                    <i class="bi bi-plus-square"></i>
-                                    Agregar
-                                </button>
-                                <table class="table table-bordered" id="table1" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>N°</th>
-                                            <th>Nombre(s) y Apellido(s)</th>
-                                            <th>Unidad</th>
-                                            <th>Cargo</th>
-                                            <th>Teléfono</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
+                            <div class="tab-content" id="customTabContent">
+                                <div class="tab-pane fade show active" id="one" role="tabpanel">
+                                    <button class="btn btn-info mb-3" id="btn-personas">
+                                        <i class="bi bi-plus-square"></i>
+                                        Agregar
+                                    </button>
+                                    <table class="table table-bordered" id="table1" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Nombre(s) y Apellido(s)</th>
+                                                <th>Unidad</th>
+                                                <th>Cargo</th>
+                                                <th>Teléfono</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
 
-                                    <tbody>
-                                        @foreach($personas as $persona)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $persona->nombres }} {{ $persona->apell_pat }} {{ $persona->apell_mat }}</td>
-                                            <td>{{ Unidad::find($persona->unidades_id)->descrip }}</td>
-                                            <td>{{ Cargo::find($persona->cargos_id)->descrip }}</td>
-                                            <td>{{ $persona->telefono }}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info" type="button">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" type="button">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <tbody>
+                                            @foreach($personas as $persona)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $persona->nombres }} {{ $persona->apell_pat }} {{ $persona->apell_mat }}</td>
+                                                <td>
+                                                    @if(!empty($persona->unidades_id))
+                                                    {{ Unidad::find($persona->unidades_id)->descrip }}
+                                                    @else
+                                                    NINGUNO
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(!empty($persona->cargos_id))
+                                                    {{ Cargo::find($persona->cargos_id)->descrip }}
+                                                    @else
+                                                    NINGUNO
+                                                    @endif
+                                                </td>
+                                                <td>{{ $persona->telefono }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info edit-personas" type="button" data-id="{{ $persona->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            <div class="tab-pane fade" id="two" role="tabpanel">
-                                <button class="btn btn-info mb-3" id="btn-unidades">
-                                    <i class="bi bi-plus-square"></i>
-                                    Agregar
-                                </button>
-                                <table class="table table-bordered" id="table2" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>N°</th>
-                                            <th>Descripción</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
+                                <div class="tab-pane fade" id="two" role="tabpanel">
+                                    <button class="btn btn-info mb-3" id="btn-unidades">
+                                        <i class="bi bi-plus-square"></i>
+                                        Agregar
+                                    </button>
+                                    <table class="table table-bordered" id="table2" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Descripción</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
 
-                                    <tbody>
-                                        @foreach($unidades as $unidad)
-                                            
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $unidad->descrip }}</td>
-                                            <td>{{ $unidad->estado }}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>   
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <tbody>
+                                            @foreach($unidades as $unidad)
 
-                            <div class="tab-pane fade" id="three" role="tabpanel">
-                                <button class="btn btn-info mb-3" id="btn-categorias">
-                                    <i class="bi bi-plus-square"></i>
-                                    Agregar
-                                </button>
-                                <table class="table table-bordered" id="table3" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>N°</th>
-                                            <th>Descripción</th>
-                                            <th>Sigla</th>
-                                            <th>Unidad</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $unidad->descrip }}</td>
+                                                <td>{{ $unidad->estado }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info edit-unidades" type="button" data-id="{{ $unidad->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                    <tbody>
-                                        @foreach($categorias as $categoria)
-                                            
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $categoria->descrip }}</td>
-                                            <td>{{ $categoria->sigla }}</td>
-                                            <td>{{ Unidad::find($categoria->unidades_id)->descrip }}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                <div class="tab-pane fade" id="three" role="tabpanel">
+                                    <button class="btn btn-info mb-3" id="btn-categorias">
+                                        <i class="bi bi-plus-square"></i>
+                                        Agregar
+                                    </button>
+                                    <table class="table table-bordered" id="table3" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Descripción</th>
+                                                <th>Sigla</th>
+                                                <th>Unidad</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
 
-                            <div class="tab-pane fade" id="four" role="tabpanel">
-                                <button class="btn btn-info mb-3" id="btn-instituciones">
-                                    <i class="bi bi-plus-square"></i>
-                                    Agregar
-                                </button>
-                                <table class="table table-bordered" id="table3" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>N°</th>
-                                            <th>Descripción</th>
-                                            <th>Ciudad</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
+                                        <tbody>
+                                            @foreach($categorias as $categoria)
 
-                                    <tbody>
-                                        @foreach($instituciones as $institucion)
-                                            
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $institucion->descrip }}</td>
-                                            <td>{{ $institucion->ciudad }}</td>
-                                            <td>{{ $institucion->estado }}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $categoria->descrip }}</td>
+                                                <td>{{ $categoria->sigla }}</td>
+                                                <td>{{ Unidad::find($categoria->unidades_id)->descrip }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info edit-categorias" type="button" data-id="{{ $categoria->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="tab-pane fade" id="four" role="tabpanel">
+                                    <button class="btn btn-info mb-3" id="btn-instituciones">
+                                        <i class="bi bi-plus-square"></i>
+                                        Agregar
+                                    </button>
+                                    <table class="table table-bordered" id="table4" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Descripción</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach($instituciones as $institucion)
+
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $institucion->descrip }}</td>
+                                                <td>{{ $institucion->ciudad }}</td>
+                                                <td>{{ $institucion->estado }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info edit-institucions" type="button" data-id="{{ $institucion->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -295,5 +305,4 @@ $instituciones = Institucion::all();
             </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection

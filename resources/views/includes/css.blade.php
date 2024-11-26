@@ -13,3 +13,6 @@
 
 <!-- Bootstrap Select CSS -->
 <link rel="stylesheet" href="components/bs-select/bs-select.css" />
+
+<!-- Date Range CSS -->
+<link rel="stylesheet" href="components/daterange/daterange.css">

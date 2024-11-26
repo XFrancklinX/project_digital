@@ -44,16 +44,17 @@ class DatabaseSeeder extends Seeder
         ];
 
         $personas = [
+            ['grado' => '0', 'apell_pat' => 'CAHUANA', 'apell_mat' => 'ARENAS', 'nombres' => 'FRANCKLIN', 'direccion' => 'SD', 'telefono' => '1234', 'estado' => 'A', 'unidades_id' => null,'cargos_id' => null],
             ['grado' => '0', 'apell_pat' => 'PEREZ', 'apell_mat' => 'PEREZ', 'nombres' => 'JUAN', 'direccion' => 'SD', 'telefono' => '1234', 'estado' => 'A', 'unidades_id' => 1,'cargos_id' => 1],
             ['grado' => '0', 'apell_pat' => 'CANO', 'apell_mat' => 'ROCA', 'nombres' => 'MARTHA', 'direccion' => 'SD', 'telefono' => '231', 'estado' => 'A', 'unidades_id' => 3,'cargos_id' => 3],
             ['grado' => '0', 'apell_pat' => 'LOPEZ', 'apell_mat' => 'CORO', 'nombres' => 'RENE', 'direccion' => 'SD', 'telefono' => '123', 'estado' => 'A', 'unidades_id' => 2,'cargos_id' => 2],
         ];
 
         $users = [
-            ['email' => 'admin@gmail.com', 'password' => Hash::make('123'), 'personas_id' => null, 'role' => 'A'],
-            ['email' => 'rectorado@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 1, 'role' => 'R'],
-            ['email' => 'academica@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 2, 'role' => 'C'],
-            ['email' => 'administrativo@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 3, 'role' => 'C'],
+            ['email' => 'admin@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 1, 'role' => 'A'],
+            ['email' => 'rectorado@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 2, 'role' => 'R'],
+            ['email' => 'academica@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 3, 'role' => 'C'],
+            ['email' => 'administrativo@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 4, 'role' => 'C'],
         ];
 
         $categorias_doc = [

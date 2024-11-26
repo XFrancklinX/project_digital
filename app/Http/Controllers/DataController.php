@@ -8,8 +8,10 @@ use App\Models\Documento;
 use App\Models\Institucion;
 use App\Models\Persona;
 use App\Models\Unidad;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
@@ -26,9 +28,35 @@ class DataController extends Controller
         return view('gestion.index');
     }
 
+    public function perfil()
+    {
+        $user = Auth::user();
+        return view('perfil.index', compact('user'));
+    }
+
     //CREATE
 
     //SHOW
+    public function reportes_data(Request $request)
+    {
+        
+        // Obtener las fechas enviadas
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $unidad_id = $request->input('report_unidad_id');
+        
+        //dd($request->all(), $startDate, $endDate, DB::table('documentos')->whereBetween('fecha_reg', [$startDate, $endDate])->get());
+        // Realizar la consulta en base de datos, dependiendo de tu lógica
+        if ($unidad_id != 0) {
+            $resultados = Documento::where('unidades_id', $unidad_id)->whereBetween('fecha_reg', [$startDate, $endDate])->get();
+        }
+        else {
+            $resultados = Documento::whereBetween('fecha_reg', [$startDate, $endDate])->get();
+        }
+
+        // Retornar los resultados como respuesta JSON
+        return response()->json(['data' => $resultados]);
+    }
 
     //STORE
     public function correspondencia_store(Request $request)
@@ -118,8 +146,8 @@ class DataController extends Controller
                 'apell_mat' => $request->apell_mat,
                 'telefono' => $request->telefono,
                 'direccion' => $request->direccion,
-                'offunidades_id' => $request->offunidades_id,
-                'offcargos_id' => $request->offcargos_id,
+                'unidades_id' => $request->offunidades_id,
+                'cargos_id' => $request->offcargos_id,
             ]);
 
             return response()->json([
@@ -129,6 +157,42 @@ class DataController extends Controller
                 'apell_pat' => $request->apell_pat,
                 'apell_mat' => $request->apell_mat
             ]);
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
+    public function gestion_personas_store(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $request->validate([
+                'nombres' => 'required',
+                'apell_pat' => 'required',
+                'apell_mat' => 'required',
+                'telefono' => 'required',
+                'direccion' => 'required',
+                'unidades_id' => 'required',
+                'cargos_id' => 'required',
+
+            ]);
+
+            Persona::create([
+                'grado' => '0',
+                'nombres' => $request->nombres,
+                'apell_pat' => $request->apell_pat,
+                'apell_mat' => $request->apell_mat,
+                'telefono' => $request->telefono,
+                'direccion' => $request->direccion,
+                'unidades_id' => $request->offunidades_id,
+                'cargos_id' => $request->offcargos_id,
+            ]);
+
+            return redirect()->route('gestion');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
@@ -158,6 +222,75 @@ class DataController extends Controller
             ]);
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
+    public function gestion_institucions_store(Request $request)
+    {
+        try {
+            $request->validate([
+                'descrip' => 'required',
+                'ciudad' => 'required',
+            ]);
+
+            Institucion::create([
+                'descrip' => $request->descrip,
+                'ciudad' => $request->ciudad,
+            ]);
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
+    public function gestion_categorias_store(Request $request)
+    {
+        //dd($request->all(), $request->descrip[0]);
+        try {
+            $request->validate([
+                'descrip' => 'required',
+                'sigla' => 'required',
+                'unidades_id' => 'required',
+            ]);
+
+            for ($i = 0; $i < count($request->descrip); $i++) {
+                Categoria::create([
+                    'descrip' => $request->descrip[$i],
+                    'sigla' => $request->sigla[$i],
+                    'unidades_id' => $request->unidades_id,
+                ]);
+            }
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
+    public function gestion_unidades_store(Request $request)
+    {
+        try {
+            $request->validate([
+                'descrip' => 'required',
+            ]);
+
+            Unidad::create([
+                'descrip' => $request->descrip,
+            ]);
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos            
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
             dd($errors); // Mostrar los errores
@@ -253,6 +386,121 @@ class DataController extends Controller
         return redirect()->route('correspondencia');
     }
 
+    public function gestion_personas_update(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $request->validate([
+                'nombres' => 'required',
+                'apell_pat' => 'required',
+                'apell_mat' => 'required',
+                'telefono' => 'required',
+                'direccion' => 'required',
+                'unidades_id' => 'required',
+                'cargos_id' => 'required',
+
+            ]);
+
+            if ($request->unidades_id != 0) {
+                $unidades_id = $request->unidades_id;
+            } else {
+                $unidades_id = null;
+            }
+
+            if ($request->cargos_id != 0) {
+                $cargos_id = $request->cargos_id;
+            } else {
+                $cargos_id = null;
+            }
+
+            Persona::where('id', $request->id)->update([
+                'grado' => '0',
+                'nombres' => $request->nombres,
+                'apell_pat' => $request->apell_pat,
+                'apell_mat' => $request->apell_mat,
+                'telefono' => $request->telefono,
+                'direccion' => $request->direccion,
+                'unidades_id' => $unidades_id,
+                'cargos_id' => $cargos_id,
+            ]);
+
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+    public function gestion_unidades_update(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $request->validate([
+                'descrip' => 'required',
+                'estado' => 'required',
+            ]);
+
+            Unidad::where('id', $request->id)->update([
+                'descrip' => $request->descrip,
+                'estado' => $request->estado,
+            ]);
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos            
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+    public function gestion_categorias_update(Request $request)
+    {
+        try {
+            $request->validate([
+                'descrip' => 'required',
+                'sigla' => 'required',
+                'unidades_id' => 'required',
+            ]);
+
+            Categoria::where('id', $request->id)->update([
+                'descrip' => $request->descrip,
+                'sigla' => $request->sigla,
+                'unidades_id' => $request->unidades_id,
+            ]);
+
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+    public function gestion_institucions_update(Request $request)
+    {
+        try {
+            $request->validate([
+                'descrip' => 'required',
+                'ciudad' => 'required',
+            ]);
+
+            Institucion::where('id', $request->id)->update([
+                'descrip' => $request->descrip,
+                'ciudad' => $request->ciudad,
+            ]);
+            return redirect()->route('gestion');
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
     //DELETE
 
     //COMBOS
@@ -267,4 +515,34 @@ class DataController extends Controller
     }
 
     //MODAL
+    public function gestion_edit(Request $request)
+    {
+        //dd($request->all());
+
+        if ($request->status == 1) {
+            $personas = Persona::find($request->id);
+            $unidades = Unidad::all();
+            $cargos = Cargo::all();
+            $status = 1;
+            return response()->json([view('includes.edit-personas', compact('personas', 'unidades', 'cargos', 'status'))->render()]);
+        }
+
+        if ($request->status == 2) {
+            $status = 2;
+            $unidades = Unidad::find($request->id);
+            return response()->json([view('includes.edit-unidades', compact('unidades', 'status'))->render()]);
+        }
+
+        if ($request->status == 3) {
+            $status = 3;
+            $categorias = Categoria::find($request->id);
+            return response()->json([view('includes.edit-categorias', compact('categorias', 'status'))->render()]);
+        }
+
+        if ($request->status == 4) {
+            $status = 4;
+            $institucions = Institucion::find($request->id);
+            return response()->json([view('includes.edit-institucions', compact('institucions', 'status'))->render()]);
+        }
+    }
 }

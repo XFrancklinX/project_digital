@@ -14,3 +14,7 @@
 <!-- Bootstrap Select JS -->
 <script src="components/bs-select/bs-select.min.js"></script>
 <script src="components/bs-select/bs-select-custom.js"></script>
+
+<!-- Date Range JS -->
+<script src="components/daterange/daterange.js"></script>
+		<script src="components/daterange/custom-daterange.js"></script>
