@@ -6,8 +6,8 @@
 
     <!-- Sidebar brand starts -->
     <div class="sidebar-brand">
-        <a href="index.html" class="logo">
-            <img src="images/logo.svg" alt="Dashboard" />
+        <a href="{{route('dashboard')}}" class="logo">
+            <img src="images/images.png" alt="Principal" />
         </a>
     </div>
     <!-- Sidebar brand starts -->
@@ -79,9 +79,9 @@ $cargos = Cargo::all();
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <i class="bi bi-house"></i>
-            <a href="index.html">Principal</a>
+            <a href="{{route('dashboard')}}">Principal</a>
         </li>
-        <li class="breadcrumb-item breadcrumb-active" aria-current="page">Correspondencia</li>
+        <li class="breadcrumb-item breadcrumb-active" aria-current="page">Digitalización</li>
     </ol>
 
     <!-- Header actions ccontainer start -->
@@ -99,7 +99,7 @@ $cargos = Cargo::all();
                         @endif
                     </span>
                     <span class="avatar">
-                        <img src="images/user.png" alt="Admin Templates">
+                        <img src="images/images.png" alt="User Image">
                         <span class="status online"></span>
                     </span>
                 </a>

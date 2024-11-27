@@ -6,8 +6,8 @@
 
     <!-- Sidebar brand starts -->
     <div class="sidebar-brand">
-        <a href="index.html" class="logo">
-            <img src="images/logo.svg" alt="Dashboard" />
+        <a href="{{route('dashboard')}}" class="logo">
+            <img src="images/images.png" alt="Principal" />
         </a>
     </div>
     <!-- Sidebar brand starts -->
@@ -66,7 +66,7 @@ $unidades = Unidad::all();
 
     <!-- Welcome start -->
     <div class="welcome-note">
-        Bienvenido, <span>
+        Bienvenido(a), <span>
             @if(Auth::user()->personas_id != null)
             {{Persona::find(Auth::user()->personas_id)->nombres}}
             @else
@@ -91,17 +91,14 @@ $unidades = Unidad::all();
                         @endif
                     </span>
                     <span class="avatar">
-                        <img src="images/user.png" alt="Admin Templates">
+                        <img src="images/images.png" alt="User Image">
                         <span class="status online"></span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-                        </form>
+                        <a href="login.html">Salir</a>
                     </div>
                 </div>
             </li>
@@ -169,24 +166,24 @@ $unidades = Unidad::all();
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="images/food/img5.jpg" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>First slide label</h5>
-                                        <p>Some representative placeholder content for the first slide.</p>
+                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
+                                    <div class="carousel-caption d-none d-md-block text-black">
+                                        <h5>Primer Slide</h5>
+                                        <p>Contenido del Primer Slide.</p>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="images/food/img8.jpg" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>Second slide label</h5>
-                                        <p>Some representative placeholder content for the second slide.</p>
+                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
+                                    <div class="carousel-caption d-none d-md-block text-black">
+                                        <h5>Segundo Slide</h5>
+                                        <p>Contenido del Segundo Slide</p>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="images/food/img1.jpg" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>Third slide label</h5>
-                                        <p>Some representative placeholder content for the third slide.</p>
+                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
+                                    <div class="carousel-caption d-none d-md-block text-black">
+                                        <h5>Tercer Slide</h5>
+                                        <p>Contenido del Tercer Slide</p>
                                     </div>
                                 </div>
                             </div>

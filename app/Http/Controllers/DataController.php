@@ -139,6 +139,20 @@ class DataController extends Controller
 
             ]);
 
+            if($request->offunidades_id != 0){
+                $unidades_id = $request->offunidades_id;
+            }
+            else{
+                $unidades_id = null;
+            }
+
+            if($request->offcargos_id != 0){
+                $cargos_id = $request->offcargos_id;
+            }
+            else{
+                $cargos_id = null;
+            }
+
             Persona::create([
                 'grado' => '0',
                 'nombres' => $request->nombres,
@@ -146,8 +160,8 @@ class DataController extends Controller
                 'apell_mat' => $request->apell_mat,
                 'telefono' => $request->telefono,
                 'direccion' => $request->direccion,
-                'unidades_id' => $request->offunidades_id,
-                'cargos_id' => $request->offcargos_id,
+                'unidades_id' => $unidades_id,
+                'cargos_id' => $cargos_id,
             ]);
 
             return response()->json([

@@ -6,8 +6,8 @@
 
     <!-- Sidebar brand starts -->
     <div class="sidebar-brand">
-        <a href="index.html" class="logo">
-            <img src="images/logo.svg" alt="Dashboard" />
+        <a href="{{route('dashboard')}}" class="logo">
+            <img src="images/images.png" alt="Principal" />
         </a>
     </div>
     <!-- Sidebar brand starts -->
@@ -69,7 +69,7 @@ $cargos = Cargo::all();
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <i class="bi bi-house"></i>
-            <a href="index.html">Principal</a>
+            <a href="{{route('dashboard')}}">Principal</a>
         </li>
         <li class="breadcrumb-item breadcrumb-active" aria-current="page">Perfil</li>
     </ol>
@@ -88,17 +88,14 @@ $cargos = Cargo::all();
                         @endif
                     </span>
                     <span class="avatar">
-                        <img src="images/user.png" alt="Admin Templates">
+                        <img src="images/images.png" alt="User Image">
                         <span class="status online"></span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-                        </form>
+                        <a href="#">Salir</a>
                     </div>
                 </div>
             </li>
@@ -120,7 +117,7 @@ $cargos = Cargo::all();
             <div class="col-sm-12 col-12">
 
                 <div class="profile-header">
-                    <h1>Welcome,
+                    <h1>Bienvenido(a),
                         @if(Auth::user()->personas_id != null)
                         {{Persona::find(Auth::user()->personas_id)->nombres}}
                         @else
@@ -180,7 +177,7 @@ $cargos = Cargo::all();
                             </div>
                         </div>
                         <div class="profile-avatar-tile">
-                            <img src="images/user.png" class="img-fluid"
+                            <img src="images/images.png" class="img-fluid"
                                 alt="Perfil Image" />
                         </div>
                     </div>
@@ -202,103 +199,138 @@ $cargos = Cargo::all();
                                 <div class="row">
                                     <div class="col-sm-6 col-12">
                                         <div class="d-flex flex-row">
-                                            <img src="images/user.png" class="img-fluid change-img-avatar" alt="Image">
-                                            <div id="dropzone-sm" class="mb-4 dropzone-dark">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
-
-                                                    <div class="dz-message needsclick">
-                                                        <button type="button" class="dz-button">Change Image.</button>
-                                                    </div>
-
-                                                </form>
+                                            <img src="images/images.png" class="img-fluid change-img-avatar border rounded" alt="Image">
+                                            <div class="image-change">
+                                                <img src="images/images.png" class=" img-fluid change-img-avatar border rounded" alt="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xxl-4 col-sm-6 col-12">
+                                    <div class="col-sm-12 col-12">
+                                        <h5>Información Personal</h5>
+                                    </div>
+                                    <hr>
+                                    <div class="col-xxl-4 col-sm-4 col-12">
                                         <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="fullName" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="fullName" placeholder="Full Name">
+                                            <label for="" class="form-label">Nombre(s)</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->nombres}}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-4 col-sm-4 col-12">
+                                        <!-- Form Field Start -->
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Apellido Paterno</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->apell_pat}}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-4 col-sm-4 col-12">
+                                        <!-- Form Field Start -->
+                                        <div class="mb-3">
+                                            <label for="phoneNo" class="form-label">Apellido Materno</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->apell_mat}}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-xxl-4 col-sm-6 col-12">
                                         <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="emailID" class="form-label">Email ID</label>
-                                            <input type="email" class="form-control" id="emailID" placeholder="reese@meail.com">
+                                            <label for="" class="form-label">Telefono</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->telefono}}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-xxl-4 col-sm-6 col-12">
                                         <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="phoneNo" class="form-label">Phone</label>
-                                            <input type="number" class="form-control" id="phoneNo" placeholder="123-456-7890">
+                                            <label for="" class="form-label">Dirección</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->direccion}}" placeholder="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-12">
+                                        <h5>Información de Acceso</h5>
+                                    </div>
+                                    <hr>
+                                    <div class="col-xxl-4 col-sm-6 col-12">
+                                        <!-- Form Field Start -->
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Grado</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Persona::find(Auth::user()->personas_id)->grado}}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-xxl-4 col-sm-6 col-12">
                                         <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="address" placeholder="Address">
+                                            <label for="" class="form-label">Rol</label>
+                                            <input type="text" class="form-control" id="" name="" value="{{Auth::user()->role}}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-xxl-4 col-sm-6 col-12">
-                                        <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="city" class="form-label">City</label>
-                                            <input type="text" class="form-control" id="city" placeholder="City">
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-sm-6 col-12">
-                                        <!-- Form Field Start -->
-                                        <div class="mb-3">
-                                            <label for="state" class="form-label">State</label>
-                                            <input type="text" class="form-control" id="state" placeholder="State">
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-sm-6 col-12">
-                                        <!-- Form Field Start -->
-                                        <div class="mb-3">
-                                            <label for="zipCode" class="form-label">Zip Code</label>
-                                            <input type="text" class="form-control" id="zipCode" placeholder="Zip Code">
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-sm-6 col-12">
-                                        <!-- Form Field Start -->
-                                        <div class="mb-3">
-                                            <label for="country" class="form-label">Country</label>
-                                            <select class="form-control" id="country">
-                                                <option>United States</option>
-                                                <option>Australia</option>
-                                                <option>Canada</option>
-                                                <option>Gremany</option>
-                                                <option>India</option>
-                                                <option>Japan</option>
-                                                <option>England</option>
-                                                <option>Brazil</option>
+                                            <label class="form-label d-flex">Unidad</label>
+                                            <select class="select-unidad-perfil js-states form-control select-single" title="Seleccione la Unidad Administrativa"
+                                                data-live-search="true" name="unidades_id" id="unidades_id">
+                                                @if(Persona::find(Auth::user()->personas_id)->unidades_id != 0)
+                                                <option value="{{Persona::find(Auth::user()->personas_id)->unidades_id}}">
+                                                    {{Unidad::find(Persona::find(Auth::user()->personas_id)->unidades_id)->id}}. {{Unidad::find(Persona::find(Auth::user()->personas_id)->unidades_id)->descrip}}
+                                                </option>
+                                                @else
+                                                <option value="0">NINGUNA</option>
+                                                @endif
+                                                @foreach ($unidades as $unidad)
+                                                <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="col-xxl-4 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label d-flex">Cargo</label>
+                                            <select class="select-cargo-perfil js-states form-control select-single" title="Seleccione El Cargo"
+                                                data-live-search="true" name="cargos_id" id="cargos_id">
+                                                @if(Persona::find(Auth::user()->personas_id)->cargos_id != 0)
+                                                <option value="{{Persona::find(Auth::user()->personas_id)->cargos_id}}">
+                                                    {{Cargo::find(Persona::find(Auth::user()->personas_id)->cargos_id)->id}}. {{Cargo::find(Persona::find(Auth::user()->personas_id)->cargos_id)->descrip}}
+                                                </option>
+                                                @else
+                                                <option value="0">NINGUNA</option>
+                                                @endif
+                                                @foreach ($cargos as $cargo)
+                                                <option value="{{$cargo->id}}">{{$cargo->id}}. {{$cargo->descrip}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-12">
+                                        <h5>Datos de Acceso</h5>
+                                    </div>
+                                    <hr>
                                     <div class="col-xxl-4 col-sm-6 col-12">
                                         <!-- Form Field Start -->
                                         <div class="mb-3">
-                                            <label for="enterPassword" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="enterPassword"
-                                                placeholder="Enter Password">
+                                            <label for="" class="form-label">Usuario</label>
+                                            <input type="email" class="form-control" id="" name="" value="{{Auth::user()->email}}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-4 col-sm-6 col-12">
+                                        <!-- Form Field Start -->
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="" name="" value="{{Auth::user()->password}}" placeholder="">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xxl-4 col-lg-5 col-md-6 col-sm-12 col-12">
                                 <div class="account-settings-block">
-                                    
+
                                 </div>
                             </div>
                             <div class="col-sm-12 col-12">
                                 <hr>
-                                <button class="btn btn-info">Save Settings</button>
+                                <button class="btn btn-info">Actualizar Información</button>
                             </div>
                         </div>
                         <!-- Row end -->

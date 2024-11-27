@@ -171,31 +171,6 @@
                             $('#add-persona').offcanvas('hide');
 
                             $('#off-add-personas')[0].reset();
-                            console.log("Modal no se cierra:", $('#add-persona').hasClass('offcanvas-show'));
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Hubo un error en la solicitud.');
-                    }
-                });
-            })
-
-            $('#off-add-personas').on('submit', function(e) {
-                e.preventDefault();
-
-                var form = $(this).serialize();
-
-                $.ajax({
-                    url: "{{ route('personas.store') }}",
-                    type: 'POST',
-                    data: form,
-                    success: function(response) {
-                        if (response.success) {
-                            $('.select-persona').append('<option value="' + response.id + '">' + response.id + '. ' + response.nombres + ' ' + response.apell_pat + ' ' + response.apell_mat + '</option>');
-
-                            $('#add-persona').offcanvas('hide');
-
-                            $('#off-add-personas')[0].reset();
                         }
                     },
                     error: function(xhr, status, error) {

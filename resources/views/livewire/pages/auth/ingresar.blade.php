@@ -7,10 +7,10 @@
         <div class="login-box">
             <div class="login-form">
                 <a href="#" class="login-logo">
-                    <img src="images/logo.svg" alt="Logo" />
+                    <img src="images/images.png" alt="Logo" />
                 </a>
                 <div class="login-welcome">
-                    Welcome back, <br />Please login to your Vivo admin account.
+                    Bienvenido, <br />Por favor ingrese sus credenciales de acceso.
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Usuario</label>

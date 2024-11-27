@@ -114,7 +114,7 @@
                         <div class="col-sm-4 col-12 mb-3">
                             <label for="" class="form-label col-12">Archivo(s)</label>
                             <button class="btn-primary rounded" type="button">
-                                <input class="input" type="file" name="file[]" id="file" placeholder="" accept=".pdf ,.doc ,.docx"  multiple>
+                                <input class="input" type="file" name="file[]" id="file" placeholder="" accept=".pdf ,.doc ,.docx" required="">
                                 <i class="bi bi-upload"></i> Cargar
                             </button>
                         </div>

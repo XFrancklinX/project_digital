@@ -17,4 +17,4 @@
 
 <!-- Date Range JS -->
 <script src="components/daterange/daterange.js"></script>
-		<script src="components/daterange/custom-daterange.js"></script>
+<script src="components/daterange/custom-daterange.js"></script>
