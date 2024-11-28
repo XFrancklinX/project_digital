@@ -364,7 +364,7 @@ class DataController extends Controller
                 $files = $request->file('file');
                 $i = 1;
                 foreach ($files as $file) {
-                    $name = 'document_' . $code . '_' . $i . '.' . $file->guessExtension();
+                    $name = 'document_' . $request->code . '_' . $i . '.' . $file->guessExtension();
                     if (file_exists(public_path('documents/' . $name))) {
                         File::delete(public_path('documents/' . $name));
 
