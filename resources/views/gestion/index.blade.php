@@ -23,11 +23,21 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{route('correspondencia')}}">
+                <li class="sidebar-dropdown">
+                    <a href="#">
                         <i class="bi bi-stickies"></i>
                         <span class="menu-text">Digitalización</span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{route('correspondencia')}}">Archivados</a>
+                            </li>
+                            <li>
+                                <a href="{{route('anulados')}}">Anulados</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="active-page-link">
@@ -58,6 +68,7 @@ use App\Models\Categoria;
 use App\Models\Documento;
 use App\Models\Cargo;
 use App\Models\Institucion;
+use App\Models\User;
 
 $personas = Persona::all();
 $unidades = Unidad::all();
@@ -96,7 +107,13 @@ $instituciones = Institucion::all();
                         @endif
                     </span>
                     <span class="avatar">
-                        <img src="images/images.png" alt="User Image">
+                        @if(Auth::user()->image != null || Auth::user()->image != '')
+                        <img src="images/users/{{Auth::user()->image}}" class="img-fluid"
+                            alt="User Image" />
+                        @else
+                        <img src="images/users/users.webp" class="img-fluid"
+                            alt="User Image" />
+                        @endif
                         <span class="status online"></span>
                     </span>
                 </a>
@@ -122,9 +139,33 @@ $instituciones = Institucion::all();
     <div class="content-wrapper">
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
+            <div id="modal-content">
+                <div class="col-12 error" id="error">
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header">
-                    <div id="modal-content"></div>
                     <div class="card-body">
                         <div class="custom-tabs-container">
                             <ul class="nav nav-tabs" id="customTab" role="tablist">
@@ -167,8 +208,9 @@ $instituciones = Institucion::all();
 
                                         <tbody>
                                             @foreach($personas as $persona)
+                                            @if(User::where('personas_id', $persona->id)->value('role') != 'A')
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $loop->iteration-1 }}</td>
                                                 <td>{{ $persona->nombres }} {{ $persona->apell_pat }} {{ $persona->apell_mat }}</td>
                                                 <td>
                                                     @if(!empty($persona->unidades_id))
@@ -191,6 +233,7 @@ $instituciones = Institucion::all();
                                                     </button>
                                                 </td>
                                             </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>

@@ -8,11 +8,13 @@ use App\Models\Documento;
 use App\Models\Institucion;
 use App\Models\Persona;
 use App\Models\Unidad;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class DataController extends Controller
@@ -39,23 +41,43 @@ class DataController extends Controller
     //SHOW
     public function reportes_data(Request $request)
     {
-        
+
         // Obtener las fechas enviadas
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $unidad_id = $request->input('report_unidad_id');
-        
+
         //dd($request->all(), $startDate, $endDate, DB::table('documentos')->whereBetween('fecha_reg', [$startDate, $endDate])->get());
         // Realizar la consulta en base de datos, dependiendo de tu lógica
         if ($unidad_id != 0) {
-            $resultados = Documento::where('unidades_id', $unidad_id)->whereBetween('fecha_reg', [$startDate, $endDate])->get();
-        }
-        else {
-            $resultados = Documento::whereBetween('fecha_reg', [$startDate, $endDate])->get();
+            $resultados = Documento::where('estado', 'A')->where('unidades_id', $unidad_id)->whereBetween('fecha_reg', [$startDate, $endDate])->get();
+        } else {
+            $resultados = Documento::where('estado', 'A')->whereBetween('fecha_reg', [$startDate, $endDate])->get();
         }
 
         // Retornar los resultados como respuesta JSON
         return response()->json(['data' => $resultados]);
+    }
+
+    public function correspondencia_table(Request $request)
+    {
+        if ($request->unidad_id != 0) {
+            if ($request->interna == 1) {
+                $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'INTERNA')->where('estado', 'A')->get();
+            }
+            else{
+                if ($request->externa == 1) {
+                    $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'EXTERNA')->where('estado', 'A')->get();
+                }
+                else{
+                    $documentos = Documento::where('unidades_id', $request->unidad_id)->where('estado', 'A')->get();
+                }
+            }
+
+        } else {
+            $documentos = Documento::where('estado', 'A')->get();
+        }
+        return response()->json(['data' => $documentos]);
     }
 
     //STORE
@@ -110,17 +132,13 @@ class DataController extends Controller
                 'personas_id' => $request->personas_id,
                 'users_id' => Auth::user()->id
             ]);
-
-
-            return redirect()->route('correspondencia');
+            return redirect()->route('correspondencia')->with('success', 'Documento creado correctamente');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
-
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -139,17 +157,15 @@ class DataController extends Controller
 
             ]);
 
-            if($request->offunidades_id != 0){
+            if ($request->offunidades_id != 0) {
                 $unidades_id = $request->offunidades_id;
-            }
-            else{
+            } else {
                 $unidades_id = null;
             }
 
-            if($request->offcargos_id != 0){
+            if ($request->offcargos_id != 0) {
                 $cargos_id = $request->offcargos_id;
-            }
-            else{
+            } else {
                 $cargos_id = null;
             }
 
@@ -175,8 +191,8 @@ class DataController extends Controller
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -190,13 +206,13 @@ class DataController extends Controller
                 'apell_mat' => 'required',
                 'telefono' => 'required',
                 'direccion' => 'required',
+                'grado' => 'required',
                 'unidades_id' => 'required',
                 'cargos_id' => 'required',
-
             ]);
 
             Persona::create([
-                'grado' => '0',
+                'grado' => $request->grado,
                 'nombres' => $request->nombres,
                 'apell_pat' => $request->apell_pat,
                 'apell_mat' => $request->apell_mat,
@@ -206,13 +222,21 @@ class DataController extends Controller
                 'cargos_id' => $request->offcargos_id,
             ]);
 
-            return redirect()->route('gestion');
+            if (($request->email != null && $request->password != null) || ($request->email != '' && $request->password == '')) {
+                User::create([
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role' => $request->role,
+                ]);
+            }
+
+            return redirect()->route('gestion')->with('success', 'Persona creada correctamente');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -238,8 +262,8 @@ class DataController extends Controller
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -255,13 +279,13 @@ class DataController extends Controller
                 'descrip' => $request->descrip,
                 'ciudad' => $request->ciudad,
             ]);
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Institución creada correctamente');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -282,13 +306,13 @@ class DataController extends Controller
                     'unidades_id' => $request->unidades_id,
                 ]);
             }
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Categoría creada correctamente');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -302,13 +326,13 @@ class DataController extends Controller
             Unidad::create([
                 'descrip' => $request->descrip,
             ]);
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Unidad creada correctamente');
         } catch (ValidationException $e) {
-            // Si hay errores de validación, capturarlos            
+            // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -380,15 +404,13 @@ class DataController extends Controller
             ]);
 
 
-            return redirect()->route('correspondencia');
+            return redirect()->route('correspondencia')->with('success', 'Documento #' . $request->id . ' actualizado');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
-
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 
@@ -397,12 +419,12 @@ class DataController extends Controller
         Documento::where('id', $request->id)->update([
             'estado' => 'B',
         ]);
-        return redirect()->route('correspondencia');
+        return redirect()->route('correspondencia')->with('success', 'Documento #' . $request->id . ' anulado');
     }
 
     public function gestion_personas_update(Request $request)
     {
-        //dd($request->all());
+        //dd($request->all(), $request->id);
         try {
             $request->validate([
                 'nombres' => 'required',
@@ -410,9 +432,10 @@ class DataController extends Controller
                 'apell_mat' => 'required',
                 'telefono' => 'required',
                 'direccion' => 'required',
+                'grado' => 'required',
                 'unidades_id' => 'required',
                 'cargos_id' => 'required',
-
+                'email' => 'unique:users,email,' . User::where('personas_id', $request->id)->first()->id,
             ]);
 
             if ($request->unidades_id != 0) {
@@ -428,23 +451,48 @@ class DataController extends Controller
             }
 
             Persona::where('id', $request->id)->update([
-                'grado' => '0',
                 'nombres' => $request->nombres,
                 'apell_pat' => $request->apell_pat,
                 'apell_mat' => $request->apell_mat,
                 'telefono' => $request->telefono,
                 'direccion' => $request->direccion,
+                'grado' => $request->grado,
                 'unidades_id' => $unidades_id,
                 'cargos_id' => $cargos_id,
             ]);
 
-            return redirect()->route('gestion');
+            if (($request->email != null && $request->password != null) || ($request->email != '' && $request->password == '')) {
+                if (User::where('personas_id', $request->id)->exists() == false) {
+                    User::create([
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                        'personas_id' => $request->id,
+                        'role' => $request->role,
+                    ]);
+                }
+            } else {
+                if ($request->reset == 1 || $request->reset == '1') {
+                    User::where('personas_id', $request->id)->update([
+                        'email' => $request->email,
+                        'password' => Hash::make('123'),
+                        'role' => $request->role
+                    ]);
+                } else {
+                    User::where('personas_id', $request->id)->update([
+                        'email' => $request->email,
+                        #'personas_id' => $request->id,
+                        'role' => $request->role
+                    ]);
+                }
+            }
+
+            return redirect()->route('gestion')->with('success', 'Persona #' . $request->id - 1 . ' actualizada');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
     public function gestion_unidades_update(Request $request)
@@ -460,13 +508,13 @@ class DataController extends Controller
                 'descrip' => $request->descrip,
                 'estado' => $request->estado,
             ]);
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Unidad #' . $request->id . ' actualizada');
         } catch (ValidationException $e) {
-            // Si hay errores de validación, capturarlos            
+            // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
     public function gestion_categorias_update(Request $request)
@@ -484,13 +532,13 @@ class DataController extends Controller
                 'unidades_id' => $request->unidades_id,
             ]);
 
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Categoria #' . $request->id . ' actualizada');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
     public function gestion_institucions_update(Request $request)
@@ -505,13 +553,97 @@ class DataController extends Controller
                 'descrip' => $request->descrip,
                 'ciudad' => $request->ciudad,
             ]);
-            return redirect()->route('gestion');
+            return redirect()->route('gestion')->with('success', 'Institucion #' . $request->id . ' actualizada');
         } catch (ValidationException $e) {
             // Si hay errores de validación, capturarlos
             $errors = $e->errors();  // Esto contiene los errores de validación
             // Depurar o mostrar los errores
-            dd($errors); // Mostrar los errores
-            return redirect()->back()->withInput()->withErrors($errors);
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
+        }
+    }
+
+    public function perfil_update(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $request->validate([
+                'nombres' => 'required',
+                'apell_pat' => 'required',
+                'apell_mat' => 'required',
+                'telefono' => 'required',
+                'direccion' => 'required',
+                'unidades_id' => 'required',
+                'cargos_id' => 'required',
+                'grado' => 'required',
+                'role' => 'required',
+                'unidades_id' => 'required',
+                'cargos_id' => 'required',
+                'email' => 'required',
+                'password' => 'required',
+            ]);
+
+            //dd(User::where('id', $request->users_id)->first()->password);
+            $user = User::where('id', $request->users_id)->first();
+            if ($user && Hash::check($request->password, $user->password)) {
+
+                $nameimg = "";
+                if ($request->inserted == 1) {
+                    if ($request->hasFile('image')) {
+                        $file = $request->file('image');
+                        if (File::exists(public_path('images/users/' . $user->image))) {
+                            File::delete(public_path('images/users/' . $user->image));
+                        }
+                        $nameimg .= 'user_' . Auth::user()->id . '.' . $file->guessExtension();
+                        $file->move(public_path('images/users/'), $nameimg);
+                    }
+                }
+                //dd($nameimg, $request->users_id);
+
+                if ($user->role == 'A') {
+                    $role = 'A';
+                } else {
+                    $role = $request->role;
+                }
+
+                User::where('id', $request->users_id)->update([
+                    'email' => $request->email,
+                    'role' => $role,
+                    'image' => $nameimg
+                ]);
+
+                if ($request->unidades_id != 0) {
+                    $unidades_id = $request->unidades_id;
+                } else {
+                    $unidades_id = null;
+                }
+
+                if ($request->cargos_id != 0) {
+                    $cargos_id = $request->cargos_id;
+                } else {
+                    $cargos_id = null;
+                }
+
+                Persona::where('id', $user->personas_id)->update([
+                    'grado' => $request->grado,
+                    'nombres' => $request->nombres,
+                    'apell_pat' => $request->apell_pat,
+                    'apell_mat' => $request->apell_mat,
+                    'telefono' => $request->telefono,
+                    'direccion' => $request->direccion,
+                    'unidades_id' => $unidades_id,
+                    'cargos_id' => $cargos_id,
+                ]);
+                return redirect()->route('perfil')->with('success', 'Perfil actualizado');
+            } else {
+                return redirect()->route('perfil')->with('error', 'Contraseña incorrecta');
+            }
+        } catch (ValidationException $e) {
+            // Si hay errores de validación, capturarlos
+            $errors = $e->errors();  // Esto contiene los errores de validación
+            // Depurar o mostrar los errores
+            //dd($errors); // Mostrar los errores
+            return redirect()->back()->withInput()->withErrors($errors)->with('error', 'Error de validación, verifique que todos los campos esten llenos');
         }
     }
 

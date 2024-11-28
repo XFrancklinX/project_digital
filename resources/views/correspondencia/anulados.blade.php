@@ -31,10 +31,10 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="{{route('correspondencia')}}" class="current-page">Archivados</a>
+                                <a href="{{route('correspondencia')}}">Archivados</a>
                             </li>
                             <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
+                                <a href="{{route('anulados')}}" class="current-page">Anulados</a>
                             </li>
                         </ul>
                     </div>
@@ -74,9 +74,9 @@ $unidades = Unidad::all();
 $categorias = Categoria::all();
 $personas = Persona::all();
 $instituciones = Institucion::all();
-$documentos = Documento::where('estado', '=', 'A')->get();
-$documentos1 = Documento::where('tipo_doc', '=', 'INTERNA')->where('estado', '=', 'A')->get();
-$documentos2 = Documento::where('tipo_doc', '=', 'EXTERNA')->where('estado', '=', 'A')->get();
+$documentos = Documento::where('estado', '=', 'B')->get();
+$documentos1 = Documento::where('tipo_doc', '=', 'INTERNA')->where('estado', '=', 'B')->get();
+$documentos2 = Documento::where('tipo_doc', '=', 'EXTERNA')->where('estado', '=', 'B')->get();
 $cargos = Cargo::all();
 @endphp
 
@@ -167,14 +167,6 @@ $cargos = Cargo::all();
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-info add" id="add" data-bs-toggle="modal"
-                        data-bs-target="#modal-add">
-                        <i class="bi bi-plus-square"></i>
-                        Agregar
-                    </button>
-                </div>
-                @include('includes.add')
                 <div class="card-body">
                     <div class="custom-tabs-container">
                         <ul class="nav nav-tabs" id="customTab" role="tablist">
@@ -193,16 +185,6 @@ $cargos = Cargo::all();
                         </ul>
                         <div class="tab-content" id="customTabContent">
                             <div class="tab-pane fade show active" id="one" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-all" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <table class="table table-bordered" id="table1" style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -213,7 +195,6 @@ $cargos = Cargo::all();
                                             <th>Tipo</th>
                                             <th>Registro</th>
                                             <th>Gestión</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
 
@@ -227,14 +208,6 @@ $cargos = Cargo::all();
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
                                             <td>{{$documento->gestion}}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-x-square"></i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -242,16 +215,6 @@ $cargos = Cargo::all();
                             </div>
 
                             <div class="tab-pane fade" id="two" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-interna" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <table class="table table-bordered" id="table2" style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -262,7 +225,6 @@ $cargos = Cargo::all();
                                             <th>Tipo</th>
                                             <th>Registro</th>
                                             <th>Gestión</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
 
@@ -276,14 +238,6 @@ $cargos = Cargo::all();
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
                                             <td>{{$documento->gestion}}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-x-square"></i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -291,16 +245,6 @@ $cargos = Cargo::all();
                             </div>
 
                             <div class="tab-pane fade" id="three" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-externa" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -311,7 +255,6 @@ $cargos = Cargo::all();
                                             <th>Tipo</th>
                                             <th>Registro</th>
                                             <th>Gestión</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
 
@@ -325,14 +268,6 @@ $cargos = Cargo::all();
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
                                             <td>{{$documento->gestion}}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
-                                                    <i class="bi bi-x-square"></i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

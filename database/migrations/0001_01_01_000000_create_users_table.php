@@ -83,6 +83,7 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('personas_id')->nullable();
             $table->enum('role', ['A', 'R', 'C'])->default('C');
+            $table->text('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
             

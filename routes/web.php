@@ -8,18 +8,20 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'livewire.pages.auth.ingresar');
 Route::post('ingreso', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', function () {
-    Auth::logout();  // Cerrar la sesión del usuario
-    
-    return redirect('/');  // Redirigir a la página de login o inicio
+    Auth::logout();
+    return redirect('/');
 })->name('logout');
 
-//Correspondencia
+Route::middleware(['auth'])->group(function () {
+    //Correspondencia
 Route::view('correspondencia', 'correspondencia.index')->name('correspondencia');
+Route::view('anulados', 'correspondencia.anulados')->name('anulados');
 Route::get('get_categorias', [DataController::class, 'getCategorias'])->name('get.categorias');
 Route::post('correspondencia_store', [DataController::class, 'correspondencia_store'])->name('correspondencia.store');
 Route::get('correspondencia_edit/{id}', [DataController::class, 'correspondencia_edit'])->name('correspondencia.edit');
 Route::post('correspondencia_update', [DataController::class, 'correspondencia_update'])->name('correspondencia.update');
 Route::get('correspondencia_anule', [DataController::class, 'correspondencia_anule'])->name('correspondencia.anule');
+Route::get('correspondencia_table', [DataController::class, 'correspondencia_table'])->name('correspondencia.table');
 
 
 //Personas
@@ -47,6 +49,7 @@ Route::get('reportes_data', [DataController::class, 'reportes_data'])->name('rep
 
 //Perfil
 Route::get('perfil', [DataController::class, 'perfil'])->name('perfil');
+Route::post('perfil_update', [DataController::class, 'perfil_update'])->name('perfil.update');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -55,5 +58,6 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+});
 
 require __DIR__ . '/auth.php';

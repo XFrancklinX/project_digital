@@ -23,11 +23,21 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{route('correspondencia')}}">
+                <li class="sidebar-dropdown">
+                    <a href="#">
                         <i class="bi bi-stickies"></i>
                         <span class="menu-text">Digitalización</span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{route('correspondencia')}}">Archivados</a>
+                            </li>
+                            <li>
+                                <a href="{{route('anulados')}}">Anulados</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li>
@@ -96,13 +106,19 @@ $instituciones = Institucion::all();
                         @endif
                     </span>
                     <span class="avatar">
-                        <img src="images/images.png" alt="User Image">
+                        @if(Auth::user()->image != null || Auth::user()->image != '')
+                        <img src="images/users/{{Auth::user()->image}}" class="img-fluid"
+                            alt="User Image" />
+                        @else
+                        <img src="images/users/users.webp" class="img-fluid"
+                            alt="User Image" />
+                        @endif
                         <span class="status online"></span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
-                    <a href="{{route('perfil')}}">Perfil</a>
+                        <a href="{{route('perfil')}}">Perfil</a>
                         <a href="login.html">Salir</a>
                     </div>
                 </div>
@@ -170,10 +186,11 @@ $instituciones = Institucion::all();
                                     <th>Tipo</th>
                                     <th>Registro</th>
                                     <th>Gestión</th>
+                                    <th>Archivo</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                         </table>
                     </div>

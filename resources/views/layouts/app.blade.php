@@ -63,6 +63,72 @@
                 responsive: true,
             });
 
+            $('.select-unidad-archivos').select2({
+                width: '100%',
+            });
+
+            $('.unidades-all').on('change', function() {
+                var unidad_id = $(this).val();
+                //console.log(unidad_id);
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('correspondencia.table') }}",
+                    data: {
+                        unidad_id: unidad_id
+                    },
+                    success: function(response) {
+                        //console.log(response.data);
+                        $('#table1 tbody').empty();
+                        $.each(response.data, function(index, value) {
+                            console.log(value.id);
+                            $('#table1 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                        });
+                    }
+                })
+            });
+
+            $('.unidades-interna').on('change', function() {
+                var unidad_id = $(this).val();
+                //console.log(unidad_id);
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('correspondencia.table') }}",
+                    data: {
+                        unidad_id: unidad_id,
+                        interna: 1
+                    },
+                    success: function(response) {
+                        //console.log(response.data);
+                        $('#table2 tbody').empty();
+                        $.each(response.data, function(index, value) {
+                            console.log(value.id);
+                            $('#table2 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                        });
+                    }
+                })
+            });
+
+            $('.unidades-externa').on('change', function() {
+                var unidad_id = $(this).val();
+                //console.log(unidad_id);
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('correspondencia.table') }}",
+                    data: {
+                        unidad_id: unidad_id,
+                        externa: 1
+                    },
+                    success: function(response) {
+                        //console.log(response.data);
+                        $('#table3 tbody').empty();
+                        $.each(response.data, function(index, value) {
+                            //console.log(value.id);
+                            $('#table3 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                        });
+                    }
+                })
+            });
+
             $('#modal-add').on('shown.bs.modal', function() {
                 $('.select-single').select2({
                     width: '100%',
@@ -452,14 +518,13 @@
                         console.log(response.data);
                         // Limpiar el contenido de la tabla
                         $('#table-report tbody').empty();
-                        
+
                         // Mostrar el resultado en la tabla
                         $.each(response.data, function(index, value) {
-                            console.log(index,value);
+                            //console.log(index,value);
 
                             // Agregar los datos a la tabla
-                            $('#table-report tbody').append('<tr><td>' + (index+1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td></tr>');
-
+                            $('#table-report tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><a href="documents/' + value.archivo + '" target="_blank" class="btn btn-success" role="button" title="Ver Archivo"><i class="bi bi-eye"></i></a>' + '</td></tr>');
                         })
                     },
                     error: function(xhr, status, error) {

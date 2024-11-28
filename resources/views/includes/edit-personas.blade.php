@@ -15,6 +15,7 @@ use App\Models\Persona;
 use App\Models\Unidad;
 use App\Models\Documento;
 use App\Models\Cargo;
+use App\Models\User;
 @endphp
 
 <!-- Modal 2 -->
@@ -34,16 +35,20 @@ use App\Models\Cargo;
                     <div id="section-personas">
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-sm-12 col-12">
+                                    <h5>Información Personal</h5>
+                                </div>
+                                <hr>
                                 <input type="number" id="id" name="id" value="{{$personas->id}}" hidden readonly>
-                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                <div class="col-sm-4 col-12 mb-3 px-1">
                                     <label for="" class="form-label">Nombre(s)</label>
                                     <input type="text" class="form-control" id="nombres" name="nombres" value="{{$personas->nombres}}" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                                 </div>
-                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                <div class="col-sm-4 col-12 mb-3 px-1">
                                     <label for="" class="form-label">Apellido Paterno</label>
                                     <input type="text" class="form-control" id="apell_pat" name="apell_pat" value="{{$personas->apell_pat}}" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                                 </div>
-                                <div class="col-sm-6 col-12 mb-3 px-1">
+                                <div class="col-sm-4 col-12 mb-3 px-1">
                                     <label for="" class="form-label">Apellido Materno</label>
                                     <input type="text" class="form-control" id="apell_mat" name="apell_mat" value="{{$personas->apell_mat}}" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                                 </div>
@@ -51,16 +56,19 @@ use App\Models\Cargo;
                                     <label for="" class="form-label">Teléfono</label>
                                     <input type="text" class="form-control" id="telefono" name="telefono" value="{{$personas->telefono}}" placeholder="" required="">
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-sm-12 col-12 mb-3 px-1">
+                                <div class="col-sm-6 col-12 mb-3 px-1">
                                     <label for="" class="form-label">Dirección</label>
                                     <input type="text" class="form-control" id="direccion" name="direccion" value="{{$personas->direccion}}" placeholder="" required="" oninput="this.value = this.value.toUpperCase()">
                                 </div>
                             </div>
 
                             <div class="row">
+                                <div class="col-sm-12 col-12">
+                                    <h5>Información de Acceso <span class="text-muted">(Opcional)</span></h5>
+                                </div>
+                                <hr>
+
                                 <div class="col-sm-6 col-12 mb-3 px-1">
                                     <div class="m-0">
                                         <label class="form-label d-flex">Unidad Administrativa</label>
@@ -91,6 +99,68 @@ use App\Models\Cargo;
                                             @foreach ($cargos as $cargo)
                                             <option value="{{$cargo->id}}">{{$cargo->id}}. {{$cargo->descrip}}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-12 px-1">
+                                    <!-- Form Field Start -->
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Grado</label>
+                                        <input type="text" class="form-control" id="grado" name="grado" value="{{$personas->grado}}" placeholder="" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-12">
+                                    <h5>Datos de Acceso <span class="text-muted">(Opcional)</span></h5>
+                                </div>
+                                <hr>
+                                <div class="col-sm-6 col-12 px-1">
+                                    <!-- Form Field Start -->
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Usuario</label>
+                                        @if(User::where('personas_id', $personas->id)->exists())
+                                        <input type="email" class="form-control" id="email" name="email" value="{{User::where('personas_id', $personas->id)->first()->email}}" placeholder="">
+                                        @else
+                                        <input type="email" class="form-control" id="email" name="email" value="" placeholder="">
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-12 px-1">
+                                    <!-- Change Password -->
+                                    <div class="mb-3">
+                                        <label for="" class="form-label col-12">Contraseña</label>
+                                        @if(User::where('personas_id', $personas->id)->exists())
+                                        <button type="button" class="btn btn-dark" id="btn-reset">Resetear Contraseña</button>
+                                        <input type="password" id="password" name="reset" value="0" hidden readonly>
+                                        @else
+                                        <input type="password" id="password" class="form-control" name="password" value="">
+                                        @endif
+                                    </div>
+                                    <script>
+                                        $('#btn-reset').on('click', function() {
+                                            $('#password').val('1');
+                                            console.log($('#password').val());
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="col-sm-6 col-12 x-1">
+                                    <div class="m-0">
+                                        <label class="form-label d-flex">Rol</label>
+                                        <select class="select-role-edit js-states form-control select-single" title="Seleccione el Rol"
+                                            data-live-search="true" name="role" id="role">
+                                            @if(User::where('personas_id', $personas->id)->exists())
+                                            <option value="{{User::where('personas_id', $personas->id)->first()->role}}">{{User::where('personas_id', $personas->id)->first()->role}}</option>
+                                            @else
+                                            <option value="C">Seleccionar</option>
+                                            @endif
+                                            <option value="R">R</option>
+                                            <option value="C">C</option>
                                         </select>
                                     </div>
                                 </div>

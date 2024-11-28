@@ -51,10 +51,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         $users = [
-            ['email' => 'admin@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 1, 'role' => 'A'],
-            ['email' => 'rectorado@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 2, 'role' => 'R'],
-            ['email' => 'academica@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 3, 'role' => 'C'],
-            ['email' => 'administrativo@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 4, 'role' => 'C'],
+            ['email' => 'admin@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 1, 'role' => 'A', 'image' => null],
+            ['email' => 'rectorado@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 2, 'role' => 'R', 'image' => null],
+            ['email' => 'academica@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 3, 'role' => 'C', 'image' => null],
+            ['email' => 'administrativo@gmail.com', 'password' => Hash::make('123'), 'personas_id' => 4, 'role' => 'C', 'image' => null],
         ];
 
         $categorias_doc = [
