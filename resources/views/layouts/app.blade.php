@@ -271,6 +271,7 @@
 
             $('.table').on('click', '.edit', function() {
                 var id = $(this).data('id');
+                //console.log(id);
                 $.ajax({
                     url: "{{ route('correspondencia.edit', 'id') }}".replace('id', id),
                     type: 'GET',

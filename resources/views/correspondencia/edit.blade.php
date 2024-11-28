@@ -35,7 +35,7 @@ $cargos = Cargo::all();
                         </div>
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Codigo</label>
-                            <input type="text" class="form-control" id="code" name="code" placeholder="" value="{{$documentos->codigo}}" readonly required="">
+                            <input type="text" class="form-control" id="code" name="code" placeholder="" value="{{$documentos->codigo}}" readonly>
                         </div>
                         <div class="col-sm-12 col-12 mb-3">
                             <label for="" class="form-label">Nº de CITE</label>
@@ -50,7 +50,7 @@ $cargos = Cargo::all();
                             <div class="m-0">
                                 <label class="form-label d-flex">Unidad Administrativa</label>
                                 <select class="select-unidad js-states form-control select-single" title="Seleccione la Unidad Administrativa"
-                                    data-live-search="true" name="unidades_id" id="unidades_id" required="" disabled>
+                                    data-live-search="true" name="unidades_id" id="unidades_id" disabled>
                                     <option value="{{$documentos->unidades_id}}">{{Unidad::find($documentos->unidades_id)->id}}. {{Unidad::find($documentos->unidades_id)->descrip}}</option>
                                     @foreach ($unidades as $unidad)
                                     <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
@@ -62,7 +62,7 @@ $cargos = Cargo::all();
                             <div class="m-0">
                                 <label class="form-label d-flex">Categoría</label>
                                 <select class="select-categoria js-states form-control select-single" title="Seleccione El tipo de Documento"
-                                    data-live-search="true" name="categorias_id" id="categorias_id" required="" disabled>
+                                    data-live-search="true" name="categorias_id" id="categorias_id" disabled>
                                     <option value="{{$documentos->categorias_id}}">{{Categoria::find($documentos->categorias_id)->id}}. {{Categoria::find($documentos->categorias_id)->descrip}}</option>
                                 </select>
                             </div>
@@ -101,7 +101,7 @@ $cargos = Cargo::all();
                             <div class="m-0">
                                 <label class="form-label d-flex">Persona</label>
                                 <select class="select-persona js-states form-control select-single" title="Seleccione la Persona"
-                                    data-live-search="true" name="personas_id" id="personas_id" required="" disabled>
+                                    data-live-search="true" name="personas_id" id="personas_id" disabled>
                                     <option value="{{$documentos->personas_id}}">{{$documentos->personas_id}}. {{Persona::find($documentos->personas_id)->nombres}} {{Persona::find($documentos->personas_id)->apell_pat}} {{Persona::find($documentos->personas_id)->apell_mat}}</option>
                                     @foreach ($personas as $persona)
                                     <option value="{{$persona->id}}">{{$persona->id}}. {{$persona->nombres}} {{$persona->apell_pat}} {{$persona->apell_mat}}</option>
@@ -118,7 +118,7 @@ $cargos = Cargo::all();
                             <div class="m-0">
                                 <label class="form-label d-flex">Institución</label>
                                 <select class="select-institucion js-states form-control select-single" title="Seleccione la Unidad Administrativa"
-                                    data-live-search="true" name="instituciones_id" id="instituciones_id" required="" disabled>
+                                    data-live-search="true" name="instituciones_id" id="instituciones_id" disabled>
                                     <option value="{{$documentos->institucions_id}}">{{Institucion::find($documentos->institucions_id)->id}}. {{Institucion::find($documentos->institucions_id)->descrip}}</option>
                                     @foreach ($instituciones as $institucion)
                                     <option value="{{$institucion->id}}">{{$institucion->id}}. {{$institucion->descrip}}</option>
@@ -131,7 +131,7 @@ $cargos = Cargo::all();
                         <div class="col-sm-4 col-12 mb-3">
                             <label for="" class="form-label col-12">Archivo(s)</label>
                             <button class="btn-primary rounded" type="button">
-                                <input class="input" type="file" name="file[]" id="file" placeholder="" accept=".pdf ,.doc ,.docx" required="">
+                                <input class="input" type="file" name="file[]" id="file" placeholder="" accept=".pdf ,.doc ,.docx">
                                 <i class="bi bi-upload"></i> Cargar
                             </button>
                         </div>

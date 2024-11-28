@@ -108,7 +108,7 @@ return new class extends Migration
             $table->text('identificador');
             $table->text('referencia');
             $table->enum('tipo_doc', ['INTERNA', 'EXTERNA']);
-            $table->text('cargo');
+            $table->text('cargo')->nullable();
             $table->date('fecha_reg');
             $table->text('archivo');
             $table->text('gestion');

@@ -345,23 +345,19 @@ class DataController extends Controller
     //UPDATE
     public function correspondencia_update(Request $request)
     {
+        //dd($request->all());
         try {
             $request->validate([
                 'fecha_reg' => 'required',
-                'code' => 'required',
                 'identificador' => 'required',
                 'referencia' => 'required',
-                'unidades_id' => 'required',
-                'categorias_id' => 'required',
                 'radioDocumento' => 'required',
-                'personas_id' => 'required',
-                'instituciones_id' => 'required',
                 'file.*' => 'mimes:pdf,doc,docx|max:10240',
             ]);
 
 
             $explode = explode('/', $request->code);
-            $code = Categoria::find($request->categorias_id)->sigla . '_' . $explode[1] . '_' . date('Y');
+            //$code = Categoria::find($request->categorias_id)->sigla . '_' . $explode[1] . '_' . date('Y');
 
             $namefiles = '';
             if ($request->hasfile('file')) {
@@ -386,7 +382,7 @@ class DataController extends Controller
 
             Documento::where('id', $request->id)->update([
                 'fecha_doc' => date('Y-m-d'),
-                'codigo' => $code,
+                'codigo' => $request->code,
                 'identificador' => $request->identificador,
                 'referencia' => $request->referencia,
                 'tipo_doc' => $request->radioDocumento,
