@@ -355,7 +355,6 @@ class DataController extends Controller
                 'categorias_id' => 'required',
                 'radioDocumento' => 'required',
                 'personas_id' => 'required',
-                'cargo' => 'required',
                 'instituciones_id' => 'required',
                 'file.*' => 'mimes:pdf,doc,docx|max:10240',
             ]);

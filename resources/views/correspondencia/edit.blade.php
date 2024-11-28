@@ -112,7 +112,7 @@ $cargos = Cargo::all();
                         
                         <div class="col-sm-10 col-10 mb-3">
                             <label for="" class="form-label">Cargo</label>
-                            <input type="text" class="form-control" id="cargo" name="cargo" placeholder="" value="{{$documentos->cargo}}" required="" oninput="this.value = this.value.toUpperCase()">
+                            <input type="text" class="form-control" id="cargo" name="cargo" placeholder="" value="{{$documentos->cargo}}" oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <div class="col-sm-10 col-12 mb-3">
                             <div class="m-0">
