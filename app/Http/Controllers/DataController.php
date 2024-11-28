@@ -64,16 +64,13 @@ class DataController extends Controller
         if ($request->unidad_id != 0) {
             if ($request->interna == 1) {
                 $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'INTERNA')->where('estado', 'A')->get();
-            }
-            else{
+            } else {
                 if ($request->externa == 1) {
                     $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'EXTERNA')->where('estado', 'A')->get();
-                }
-                else{
+                } else {
                     $documentos = Documento::where('unidades_id', $request->unidad_id)->where('estado', 'A')->get();
                 }
             }
-
         } else {
             $documentos = Documento::where('estado', 'A')->get();
         }
@@ -377,25 +374,41 @@ class DataController extends Controller
                         $i++;
                     }
                 }
+
+                Documento::where('id', $request->id)->update([
+                    'fecha_doc' => date('Y-m-d'),
+                    'codigo' => $request->code,
+                    'identificador' => $request->identificador,
+                    'referencia' => $request->referencia,
+                    'tipo_doc' => $request->radioDocumento,
+                    'cargo' => $request->cargo,
+                    'fecha_reg' => $request->fecha_reg,
+                    'archivo' => $namefiles,
+                    'gestion' => date('Y'),
+                    'institucions_id' => $request->instituciones_id,
+                    'unidades_id' => $request->unidades_id,
+                    'categorias_id' => $request->categorias_id,
+                    'personas_id' => $request->personas_id,
+                    'users_id' => Auth::user()->id
+                ]);
+            } else {
+                Documento::where('id', $request->id)->update([
+                    'fecha_doc' => date('Y-m-d'),
+                    'codigo' => $request->code,
+                    'identificador' => $request->identificador,
+                    'referencia' => $request->referencia,
+                    'tipo_doc' => $request->radioDocumento,
+                    'cargo' => $request->cargo,
+                    'fecha_reg' => $request->fecha_reg,
+                    'gestion' => date('Y'),
+                    'institucions_id' => $request->instituciones_id,
+                    'unidades_id' => $request->unidades_id,
+                    'categorias_id' => $request->categorias_id,
+                    'personas_id' => $request->personas_id,
+                    'users_id' => Auth::user()->id
+                ]);
             }
             //dd($namefiles, $request->id);
-
-            Documento::where('id', $request->id)->update([
-                'fecha_doc' => date('Y-m-d'),
-                'codigo' => $request->code,
-                'identificador' => $request->identificador,
-                'referencia' => $request->referencia,
-                'tipo_doc' => $request->radioDocumento,
-                'cargo' => $request->cargo,
-                'fecha_reg' => $request->fecha_reg,
-                'archivo' => $namefiles,
-                'gestion' => date('Y'),
-                'institucions_id' => $request->instituciones_id,
-                'unidades_id' => $request->unidades_id,
-                'categorias_id' => $request->categorias_id,
-                'personas_id' => $request->personas_id,
-                'users_id' => Auth::user()->id
-            ]);
 
 
             return redirect()->route('correspondencia')->with('success', 'Documento #' . $request->id . ' actualizado');
