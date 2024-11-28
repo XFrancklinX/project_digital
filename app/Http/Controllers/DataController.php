@@ -95,7 +95,6 @@ class DataController extends Controller
                 'categorias_id' => 'required',
                 'radioDocumento' => 'required',
                 'personas_id' => 'required',
-                'cargo' => 'required',
                 'instituciones_id' => 'required',
                 'file.*' => 'mimes:pdf,doc,docx|max:10240',
             ]);
@@ -110,7 +109,7 @@ class DataController extends Controller
                 $namefiles = '';
                 foreach ($files as $file) {
                     $name = 'document_' . $code . '_' . $i . '.' . $file->guessExtension();
-                    $namefiles .= $name . '/';
+                    $namefiles .= $name;
                     $file->move(public_path('documents/'), $name);
                     $i++;
                 }
