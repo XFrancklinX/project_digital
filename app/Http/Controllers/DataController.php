@@ -385,11 +385,6 @@ class DataController extends Controller
                     'fecha_reg' => $request->fecha_reg,
                     'archivo' => $namefiles,
                     'gestion' => date('Y'),
-                    'institucions_id' => $request->instituciones_id,
-                    'unidades_id' => $request->unidades_id,
-                    'categorias_id' => $request->categorias_id,
-                    'personas_id' => $request->personas_id,
-                    'users_id' => Auth::user()->id
                 ]);
             } else {
                 Documento::where('id', $request->id)->update([
@@ -401,11 +396,6 @@ class DataController extends Controller
                     'cargo' => $request->cargo,
                     'fecha_reg' => $request->fecha_reg,
                     'gestion' => date('Y'),
-                    'institucions_id' => $request->instituciones_id,
-                    'unidades_id' => $request->unidades_id,
-                    'categorias_id' => $request->categorias_id,
-                    'personas_id' => $request->personas_id,
-                    'users_id' => Auth::user()->id
                 ]);
             }
             //dd($namefiles, $request->id);
