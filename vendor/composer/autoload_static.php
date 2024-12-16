@@ -9,21 +9,21 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
-        'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '47e1160838b5e5a10346ac4084b58c23' => __DIR__ . '/..' . '/laravel/prompts/src/helpers.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
@@ -54,6 +54,7 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         ),
         'T' => 
         array (
+            'Tree\\' => 5,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
             'Termwind\\' => 9,
@@ -85,9 +86,16 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\ErrorHandler\\' => 31,
+            'Symfony\\Component\\DomCrawler\\' => 29,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Clock\\' => 24,
+            'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
+            'Spatie\\TemporaryDirectory\\' => 26,
+            'Spatie\\Robots\\' => 14,
+            'Spatie\\Export\\' => 14,
+            'Spatie\\Crawler\\' => 15,
+            'Spatie\\Browsershot\\' => 19,
         ),
         'R' => 
         array (
@@ -109,12 +117,14 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         ),
         'N' => 
         array (
+            'Nyholm\\Psr7\\' => 12,
             'NunoMaduro\\Collision\\' => 21,
         ),
         'M' => 
         array (
             'Monolog\\' => 8,
             'Mockery\\' => 8,
+            'Masterminds\\' => 12,
         ),
         'L' => 
         array (
@@ -192,6 +202,10 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Tree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nicmart/tree/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -305,6 +319,10 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         array (
             0 => __DIR__ . '/..' . '/symfony/error-handler',
         ),
+        'Symfony\\Component\\DomCrawler\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dom-crawler',
+        ),
         'Symfony\\Component\\CssSelector\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
@@ -316,6 +334,30 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'Symfony\\Component\\Clock\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/clock',
+        ),
+        'Symfony\\Bridge\\PsrHttpMessage\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
+        ),
+        'Spatie\\TemporaryDirectory\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/temporary-directory/src',
+        ),
+        'Spatie\\Robots\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/robots-txt/src',
+        ),
+        'Spatie\\Export\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/laravel-export/src',
+        ),
+        'Spatie\\Crawler\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/crawler/src',
+        ),
+        'Spatie\\Browsershot\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/browsershot/src',
         ),
         'Ramsey\\Uuid\\' => 
         array (
@@ -366,6 +408,10 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'Nyholm\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
+        ),
         'NunoMaduro\\Collision\\' => 
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
@@ -377,6 +423,10 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'Mockery\\' => 
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
+        ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
         'Livewire\\Volt\\' => 
         array (
@@ -3624,6 +3674,26 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'Livewire\\WithPagination' => __DIR__ . '/..' . '/livewire/livewire/src/WithPagination.php',
         'Livewire\\WithoutUrlPagination' => __DIR__ . '/..' . '/livewire/livewire/src/WithoutUrlPagination.php',
         'Livewire\\Wrapped' => __DIR__ . '/..' . '/livewire/livewire/src/Wrapped.php',
+        'Masterminds\\HTML5' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5.php',
+        'Masterminds\\HTML5\\Elements' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Elements.php',
+        'Masterminds\\HTML5\\Entities' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Entities.php',
+        'Masterminds\\HTML5\\Exception' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Exception.php',
+        'Masterminds\\HTML5\\InstructionProcessor' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/InstructionProcessor.php',
+        'Masterminds\\HTML5\\Parser\\CharacterReference' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/CharacterReference.php',
+        'Masterminds\\HTML5\\Parser\\DOMTreeBuilder' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/DOMTreeBuilder.php',
+        'Masterminds\\HTML5\\Parser\\EventHandler' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/EventHandler.php',
+        'Masterminds\\HTML5\\Parser\\FileInputStream' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/FileInputStream.php',
+        'Masterminds\\HTML5\\Parser\\InputStream' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/InputStream.php',
+        'Masterminds\\HTML5\\Parser\\ParseError' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/ParseError.php',
+        'Masterminds\\HTML5\\Parser\\Scanner' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/Scanner.php',
+        'Masterminds\\HTML5\\Parser\\StringInputStream' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/StringInputStream.php',
+        'Masterminds\\HTML5\\Parser\\Tokenizer' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/Tokenizer.php',
+        'Masterminds\\HTML5\\Parser\\TreeBuildingRules' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/TreeBuildingRules.php',
+        'Masterminds\\HTML5\\Parser\\UTF8Utils' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Parser/UTF8Utils.php',
+        'Masterminds\\HTML5\\Serializer\\HTML5Entities' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/HTML5Entities.php',
+        'Masterminds\\HTML5\\Serializer\\OutputRules' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/OutputRules.php',
+        'Masterminds\\HTML5\\Serializer\\RulesInterface' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/RulesInterface.php',
+        'Masterminds\\HTML5\\Serializer\\Traverser' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/Traverser.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -3930,6 +4000,17 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'NunoMaduro\\Collision\\Provider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Provider.php',
         'NunoMaduro\\Collision\\SolutionsRepositories\\NullSolutionsRepository' => __DIR__ . '/..' . '/nunomaduro/collision/src/SolutionsRepositories/NullSolutionsRepository.php',
         'NunoMaduro\\Collision\\Writer' => __DIR__ . '/..' . '/nunomaduro/collision/src/Writer.php',
+        'Nyholm\\Psr7\\Factory\\HttplugFactory' => __DIR__ . '/..' . '/nyholm/psr7/src/Factory/HttplugFactory.php',
+        'Nyholm\\Psr7\\Factory\\Psr17Factory' => __DIR__ . '/..' . '/nyholm/psr7/src/Factory/Psr17Factory.php',
+        'Nyholm\\Psr7\\MessageTrait' => __DIR__ . '/..' . '/nyholm/psr7/src/MessageTrait.php',
+        'Nyholm\\Psr7\\Request' => __DIR__ . '/..' . '/nyholm/psr7/src/Request.php',
+        'Nyholm\\Psr7\\RequestTrait' => __DIR__ . '/..' . '/nyholm/psr7/src/RequestTrait.php',
+        'Nyholm\\Psr7\\Response' => __DIR__ . '/..' . '/nyholm/psr7/src/Response.php',
+        'Nyholm\\Psr7\\ServerRequest' => __DIR__ . '/..' . '/nyholm/psr7/src/ServerRequest.php',
+        'Nyholm\\Psr7\\Stream' => __DIR__ . '/..' . '/nyholm/psr7/src/Stream.php',
+        'Nyholm\\Psr7\\StreamTrait' => __DIR__ . '/..' . '/nyholm/psr7/src/StreamTrait.php',
+        'Nyholm\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/nyholm/psr7/src/UploadedFile.php',
+        'Nyholm\\Psr7\\Uri' => __DIR__ . '/..' . '/nyholm/psr7/src/Uri.php',
         'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
@@ -5752,7 +5833,64 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Spatie\\Browsershot\\Browsershot' => __DIR__ . '/..' . '/spatie/browsershot/src/Browsershot.php',
+        'Spatie\\Browsershot\\ChromiumResult' => __DIR__ . '/..' . '/spatie/browsershot/src/ChromiumResult.php',
+        'Spatie\\Browsershot\\Enums\\Polling' => __DIR__ . '/..' . '/spatie/browsershot/src/Enums/Polling.php',
+        'Spatie\\Browsershot\\Exceptions\\CouldNotTakeBrowsershot' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/CouldNotTakeBrowsershot.php',
+        'Spatie\\Browsershot\\Exceptions\\ElementNotFound' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/ElementNotFound.php',
+        'Spatie\\Browsershot\\Exceptions\\FileDoesNotExistException' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/FileDoesNotExistException.php',
+        'Spatie\\Browsershot\\Exceptions\\FileUrlNotAllowed' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/FileUrlNotAllowed.php',
+        'Spatie\\Browsershot\\Exceptions\\HtmlIsNotAllowedToContainFile' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/HtmlIsNotAllowedToContainFile.php',
+        'Spatie\\Browsershot\\Exceptions\\UnsuccessfulResponse' => __DIR__ . '/..' . '/spatie/browsershot/src/Exceptions/UnsuccessfulResponse.php',
+        'Spatie\\Browsershot\\ImageManipulations' => __DIR__ . '/..' . '/spatie/browsershot/src/ImageManipulations.php',
+        'Spatie\\Crawler\\CrawlObservers\\CrawlObserver' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlObservers/CrawlObserver.php',
+        'Spatie\\Crawler\\CrawlObservers\\CrawlObserverCollection' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlObservers/CrawlObserverCollection.php',
+        'Spatie\\Crawler\\CrawlProfiles\\CrawlAllUrls' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlProfiles/CrawlAllUrls.php',
+        'Spatie\\Crawler\\CrawlProfiles\\CrawlInternalUrls' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlProfiles/CrawlInternalUrls.php',
+        'Spatie\\Crawler\\CrawlProfiles\\CrawlProfile' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlProfiles/CrawlProfile.php',
+        'Spatie\\Crawler\\CrawlProfiles\\CrawlSubdomains' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlProfiles/CrawlSubdomains.php',
+        'Spatie\\Crawler\\CrawlQueues\\ArrayCrawlQueue' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlQueues/ArrayCrawlQueue.php',
+        'Spatie\\Crawler\\CrawlQueues\\CrawlQueue' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlQueues/CrawlQueue.php',
+        'Spatie\\Crawler\\CrawlUrl' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlUrl.php',
+        'Spatie\\Crawler\\Crawler' => __DIR__ . '/..' . '/spatie/crawler/src/Crawler.php',
+        'Spatie\\Crawler\\CrawlerRobots' => __DIR__ . '/..' . '/spatie/crawler/src/CrawlerRobots.php',
+        'Spatie\\Crawler\\Exceptions\\InvalidCrawlRequestHandler' => __DIR__ . '/..' . '/spatie/crawler/src/Exceptions/InvalidCrawlRequestHandler.php',
+        'Spatie\\Crawler\\Exceptions\\InvalidUrl' => __DIR__ . '/..' . '/spatie/crawler/src/Exceptions/InvalidUrl.php',
+        'Spatie\\Crawler\\Exceptions\\UrlNotFoundByIndex' => __DIR__ . '/..' . '/spatie/crawler/src/Exceptions/UrlNotFoundByIndex.php',
+        'Spatie\\Crawler\\Handlers\\CrawlRequestFailed' => __DIR__ . '/..' . '/spatie/crawler/src/Handlers/CrawlRequestFailed.php',
+        'Spatie\\Crawler\\Handlers\\CrawlRequestFulfilled' => __DIR__ . '/..' . '/spatie/crawler/src/Handlers/CrawlRequestFulfilled.php',
+        'Spatie\\Crawler\\ResponseWithCachedBody' => __DIR__ . '/..' . '/spatie/crawler/src/ResponseWithCachedBody.php',
+        'Spatie\\Crawler\\Url' => __DIR__ . '/..' . '/spatie/crawler/src/Url.php',
+        'Spatie\\Crawler\\UrlParsers\\LinkUrlParser' => __DIR__ . '/..' . '/spatie/crawler/src/UrlParsers/LinkUrlParser.php',
+        'Spatie\\Crawler\\UrlParsers\\SitemapUrlParser' => __DIR__ . '/..' . '/spatie/crawler/src/UrlParsers/SitemapUrlParser.php',
+        'Spatie\\Crawler\\UrlParsers\\UrlParser' => __DIR__ . '/..' . '/spatie/crawler/src/UrlParsers/UrlParser.php',
+        'Spatie\\Export\\Console\\ExportCommand' => __DIR__ . '/..' . '/spatie/laravel-export/src/Console/ExportCommand.php',
+        'Spatie\\Export\\Crawler\\LocalClient' => __DIR__ . '/..' . '/spatie/laravel-export/src/Crawler/LocalClient.php',
+        'Spatie\\Export\\Crawler\\Observer' => __DIR__ . '/..' . '/spatie/laravel-export/src/Crawler/Observer.php',
+        'Spatie\\Export\\Destination' => __DIR__ . '/..' . '/spatie/laravel-export/src/Destination.php',
+        'Spatie\\Export\\Destinations\\FilesystemDestination' => __DIR__ . '/..' . '/spatie/laravel-export/src/Destinations/FilesystemDestination.php',
+        'Spatie\\Export\\ExportServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-export/src/ExportServiceProvider.php',
+        'Spatie\\Export\\Exporter' => __DIR__ . '/..' . '/spatie/laravel-export/src/Exporter.php',
+        'Spatie\\Export\\Jobs\\CleanDestination' => __DIR__ . '/..' . '/spatie/laravel-export/src/Jobs/CleanDestination.php',
+        'Spatie\\Export\\Jobs\\CrawlSite' => __DIR__ . '/..' . '/spatie/laravel-export/src/Jobs/CrawlSite.php',
+        'Spatie\\Export\\Jobs\\ExportPath' => __DIR__ . '/..' . '/spatie/laravel-export/src/Jobs/ExportPath.php',
+        'Spatie\\Export\\Jobs\\IncludeFile' => __DIR__ . '/..' . '/spatie/laravel-export/src/Jobs/IncludeFile.php',
+        'Spatie\\Export\\Traits\\NormalizedPath' => __DIR__ . '/..' . '/spatie/laravel-export/src/Traits/NormalizedPath.php',
+        'Spatie\\Robots\\Robots' => __DIR__ . '/..' . '/spatie/robots-txt/src/Robots.php',
+        'Spatie\\Robots\\RobotsHeaders' => __DIR__ . '/..' . '/spatie/robots-txt/src/RobotsHeaders.php',
+        'Spatie\\Robots\\RobotsMeta' => __DIR__ . '/..' . '/spatie/robots-txt/src/RobotsMeta.php',
+        'Spatie\\Robots\\RobotsTxt' => __DIR__ . '/..' . '/spatie/robots-txt/src/RobotsTxt.php',
+        'Spatie\\TemporaryDirectory\\Exceptions\\InvalidDirectoryName' => __DIR__ . '/..' . '/spatie/temporary-directory/src/Exceptions/InvalidDirectoryName.php',
+        'Spatie\\TemporaryDirectory\\Exceptions\\PathAlreadyExists' => __DIR__ . '/..' . '/spatie/temporary-directory/src/Exceptions/PathAlreadyExists.php',
+        'Spatie\\TemporaryDirectory\\TemporaryDirectory' => __DIR__ . '/..' . '/spatie/temporary-directory/src/TemporaryDirectory.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\ArgumentValueResolver\\PsrServerRequestResolver' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/ArgumentValueResolver/PsrServerRequestResolver.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\EventListener\\PsrResponseListener' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/EventListener/PsrResponseListener.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\Factory\\HttpFoundationFactory' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/Factory/HttpFoundationFactory.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\Factory\\PsrHttpFactory' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/Factory/PsrHttpFactory.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\Factory\\UploadedFile' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/Factory/UploadedFile.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\HttpFoundationFactoryInterface' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/HttpFoundationFactoryInterface.php',
+        'Symfony\\Bridge\\PsrHttpMessage\\HttpMessageFactoryInterface' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/HttpMessageFactoryInterface.php',
         'Symfony\\Component\\Clock\\Clock' => __DIR__ . '/..' . '/symfony/clock/Clock.php',
         'Symfony\\Component\\Clock\\ClockAwareTrait' => __DIR__ . '/..' . '/symfony/clock/ClockAwareTrait.php',
         'Symfony\\Component\\Clock\\ClockInterface' => __DIR__ . '/..' . '/symfony/clock/ClockInterface.php',
@@ -5929,6 +6067,25 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'Symfony\\Component\\CssSelector\\XPath\\Translator' => __DIR__ . '/..' . '/symfony/css-selector/XPath/Translator.php',
         'Symfony\\Component\\CssSelector\\XPath\\TranslatorInterface' => __DIR__ . '/..' . '/symfony/css-selector/XPath/TranslatorInterface.php',
         'Symfony\\Component\\CssSelector\\XPath\\XPathExpr' => __DIR__ . '/..' . '/symfony/css-selector/XPath/XPathExpr.php',
+        'Symfony\\Component\\DomCrawler\\AbstractUriElement' => __DIR__ . '/..' . '/symfony/dom-crawler/AbstractUriElement.php',
+        'Symfony\\Component\\DomCrawler\\Crawler' => __DIR__ . '/..' . '/symfony/dom-crawler/Crawler.php',
+        'Symfony\\Component\\DomCrawler\\Field\\ChoiceFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/ChoiceFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\FileFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/FileFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\FormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/FormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\InputFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/InputFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\TextareaFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/TextareaFormField.php',
+        'Symfony\\Component\\DomCrawler\\Form' => __DIR__ . '/..' . '/symfony/dom-crawler/Form.php',
+        'Symfony\\Component\\DomCrawler\\FormFieldRegistry' => __DIR__ . '/..' . '/symfony/dom-crawler/FormFieldRegistry.php',
+        'Symfony\\Component\\DomCrawler\\Image' => __DIR__ . '/..' . '/symfony/dom-crawler/Image.php',
+        'Symfony\\Component\\DomCrawler\\Link' => __DIR__ . '/..' . '/symfony/dom-crawler/Link.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerAnySelectorTextContains' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerAnySelectorTextContains.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerAnySelectorTextSame' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerAnySelectorTextSame.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerSelectorAttributeValueSame' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerSelectorAttributeValueSame.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerSelectorCount' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerSelectorCount.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerSelectorExists' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerSelectorExists.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerSelectorTextContains' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerSelectorTextContains.php',
+        'Symfony\\Component\\DomCrawler\\Test\\Constraint\\CrawlerSelectorTextSame' => __DIR__ . '/..' . '/symfony/dom-crawler/Test/Constraint/CrawlerSelectorTextSame.php',
+        'Symfony\\Component\\DomCrawler\\UriResolver' => __DIR__ . '/..' . '/symfony/dom-crawler/UriResolver.php',
         'Symfony\\Component\\ErrorHandler\\BufferingLogger' => __DIR__ . '/..' . '/symfony/error-handler/BufferingLogger.php',
         'Symfony\\Component\\ErrorHandler\\Debug' => __DIR__ . '/..' . '/symfony/error-handler/Debug.php',
         'Symfony\\Component\\ErrorHandler\\DebugClassLoader' => __DIR__ . '/..' . '/symfony/error-handler/DebugClassLoader.php',
@@ -6774,6 +6931,15 @@ class ComposerStaticInit589cc0f65c3aaa7d4e9024d545bc1974
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'Tree\\Builder\\NodeBuilder' => __DIR__ . '/..' . '/nicmart/tree/src/Builder/NodeBuilder.php',
+        'Tree\\Builder\\NodeBuilderInterface' => __DIR__ . '/..' . '/nicmart/tree/src/Builder/NodeBuilderInterface.php',
+        'Tree\\Node\\Node' => __DIR__ . '/..' . '/nicmart/tree/src/Node/Node.php',
+        'Tree\\Node\\NodeInterface' => __DIR__ . '/..' . '/nicmart/tree/src/Node/NodeInterface.php',
+        'Tree\\Node\\NodeTrait' => __DIR__ . '/..' . '/nicmart/tree/src/Node/NodeTrait.php',
+        'Tree\\Visitor\\PostOrderVisitor' => __DIR__ . '/..' . '/nicmart/tree/src/Visitor/PostOrderVisitor.php',
+        'Tree\\Visitor\\PreOrderVisitor' => __DIR__ . '/..' . '/nicmart/tree/src/Visitor/PreOrderVisitor.php',
+        'Tree\\Visitor\\Visitor' => __DIR__ . '/..' . '/nicmart/tree/src/Visitor/Visitor.php',
+        'Tree\\Visitor\\YieldVisitor' => __DIR__ . '/..' . '/nicmart/tree/src/Visitor/YieldVisitor.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',

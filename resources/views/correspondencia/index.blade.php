@@ -1,64 +1,52 @@
 @extends('layouts.app')
 
 @section('sidebar-nav')
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li>
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown active">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}" class="current-page">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li>
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown active">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}" class="current-page">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -122,7 +110,11 @@ $cargos = Cargo::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="login.html">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -139,6 +131,7 @@ $cargos = Cargo::all();
 
     <!-- Content wrapper start -->
     <div class="content-wrapper">
+        <input type="text" id="role_user" value="{{Auth::user()->role}}" hidden>
         <div id="modal-content">
             <div class="col-12 error" id="error">
                 @if($errors->any())
@@ -193,26 +186,78 @@ $cargos = Cargo::all();
                         </ul>
                         <div class="tab-content" id="customTabContent">
                             <div class="tab-pane fade show active" id="one" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-all" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="d-sm-flex">
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Unidad Administrativa</label>
+                                        <select class="select-unidad-archivos slct11 form-control unidades-all" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="unidades_id" id="archivos_unidades_id">
+                                            <option value="0">Seleccionar</option>
+                                            @foreach ($unidades as $unidad)
+                                            <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Categoria</label>
+                                        <select class="select-categoria-archivos slct12 form-control categorias-all" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="categorias_id" id="archivos_categorias_id">
+                                            <option value="0">Seleccionar</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label col-12 opacity-0">Buscar</label>
+                                        <button type="button" class="btn btn-info" id="btn_buscar_archivos" onclick="getDataCombo($('#archivos_unidades_id').val(), $('#archivos_categorias_id').val(),0,0)"><i class="bi bi-search"></i></button>
+
+                                        <script>
+                                            function getDataCombo(unidad_id, categoria_id, interna, externa) {
+                                                //console.log("Unidad seleccionada:", unidad_id);
+                                                //console.log("Categoria seleccionada:", categoria_id);
+                                                //console.log("Internos:", interna);
+                                                //console.log("Externos:", externa);
+                                                const role_user = $('#role_user').val();
+                                                //console.log(role_user);
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "{{ route('correspondencia.table') }}",
+                                                    data: {
+                                                        unidad_id: unidad_id,
+                                                        categoria_id: categoria_id,
+                                                        interna: interna,
+                                                        externa: externa
+                                                    },
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                        $('#table1').DataTable().destroy();
+                                                        $('#table1 tbody').empty();
+
+                                                        if (role_user == 'A') {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table1 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                                                            });
+                                                        } else {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table1 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td></td></tr>');
+                                                            });
+                                                        }
+                                                        $('#table1').DataTable();
+                                                    }
+                                                })
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
                                 <table class="table table-bordered" id="table1" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>N°</th>
                                             <th>Codigo</th>
+                                            <th>Unidad</th>
                                             <th>CITE</th>
                                             <th>Referencia</th>
                                             <th>Tipo</th>
                                             <th>Registro</th>
-                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -222,18 +267,20 @@ $cargos = Cargo::all();
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$documento->codigo}}</td>
+                                            <td>{{Unidad::find($documento->unidades_id)->descrip}}</td>
                                             <td>{{$documento->identificador}}</td>
                                             <td>{{$documento->referencia}}</td>
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
-                                            <td>{{$documento->gestion}}</td>
                                             <td>
+                                                @if(Auth::user()->role == 'A')
                                                 <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-x-square"></i>
                                                 </button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -242,26 +289,76 @@ $cargos = Cargo::all();
                             </div>
 
                             <div class="tab-pane fade" id="two" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-interna" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="d-sm-flex">
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Unidad Administrativa</label>
+                                        <select class="select-unidad-archivos slct21 form-control unidades-interna" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="unidades_id" id="archivos_unidades_id1">
+                                            <option value="0">Seleccionar</option>
+                                            @foreach ($unidades as $unidad)
+                                            <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Categoria</label>
+                                        <select class="select-categoria-archivos slct22 form-control categorias-interna" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="categorias_id" id="archivos_categorias_id1">
+                                            <option value="0">Seleccionar</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label col-12 opacity-0">Buscar</label>
+                                        <button type="button" class="btn btn-info" id="btn_buscar_archivos" onclick="getDataCombo1($('#archivos_unidades_id1').val(), $('#archivos_categorias_id1').val(),1,0)"><i class="bi bi-search"></i></button>
+
+                                        <script>
+                                            function getDataCombo1(unidad_id, categoria_id, interna, externa) {
+                                                //console.log("Unidad seleccionada:", unidad_id);
+                                                //console.log("Categoria seleccionada:", categoria_id);
+                                                //console.log("Internos:", interna);
+                                                //console.log("Externos:", externa);
+                                                const role_user = $('#role_user').val();
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "{{ route('correspondencia.table') }}",
+                                                    data: {
+                                                        unidad_id: unidad_id,
+                                                        categoria_id: categoria_id,
+                                                        interna: interna,
+                                                        externa: externa
+                                                    },
+                                                    success: function(response) {
+                                                        //console.log(response);
+                                                        $('#table2').DataTable().destroy();
+                                                        $('#table2 tbody').empty();
+                                                        if (role_user == 'A') {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table2 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                                                            });
+                                                        } else {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table2 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td></td></tr>');
+                                                            });
+                                                        }
+                                                        $('#table2').DataTable();
+                                                    }
+                                                })
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
                                 <table class="table table-bordered" id="table2" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>N°</th>
                                             <th>Codigo</th>
+                                            <th>Unidad</th>
                                             <th>CITE</th>
                                             <th>Referencia</th>
                                             <th>Tipo</th>
                                             <th>Registro</th>
-                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -271,18 +368,20 @@ $cargos = Cargo::all();
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$documento->codigo}}</td>
+                                            <td>{{Unidad::find($documento->unidades_id)->descrip}}</td>
                                             <td>{{$documento->identificador}}</td>
                                             <td>{{$documento->referencia}}</td>
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
-                                            <td>{{$documento->gestion}}</td>
                                             <td>
+                                                @if(Auth::user()->role == 'A')
                                                 <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-x-square"></i>
                                                 </button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -291,26 +390,76 @@ $cargos = Cargo::all();
                             </div>
 
                             <div class="tab-pane fade" id="three" role="tabpanel">
-                                <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12">
-                                    <label class="form-label d-flex">Unidad Administrativa</label>
-                                    <select class="select-unidad-archivos js-states form-control unidades-externa" title="Seleccione la Unidad Administrativa"
-                                        data-live-search="true" name="unidades_id" id="unidades_id">
-                                        <option value="0">Seleccionar</option>
-                                        @foreach ($unidades as $unidad)
-                                        <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="d-sm-flex">
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Unidad Administrativa</label>
+                                        <select class="select-unidad-archivos slct31 form-control unidades-externa" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="unidades_id" id="archivos_unidades_id2">
+                                            <option value="0">Seleccionar</option>
+                                            @foreach ($unidades as $unidad)
+                                            <option value="{{$unidad->id}}">{{$unidad->id}}. {{$unidad->descrip}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label d-flex">Categoria</label>
+                                        <select class="select-categoria-archivos slct32 form-control categorias-externa" title="Seleccione la Unidad Administrativa"
+                                            data-live-search="true" name="categorias_id" id="archivos_categorias_id2">
+                                            <option value="0">Seleccionar</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 font-weight-bold text-dark col-xxl-3 col-xl-3 col-sm-4 col-12 me-1">
+                                        <label class="form-label col-12 opacity-0">Buscar</label>
+                                        <button type="button" class="btn btn-info" id="btn_buscar_archivos" onclick="getDataCombo2($('#archivos_unidades_id2').val(), $('#archivos_categorias_id2').val(),0,1)"><i class="bi bi-search"></i></button>
+
+                                        <script>
+                                            function getDataCombo2(unidad_id, categoria_id, interna, externa) {
+                                                //console.log("Unidad seleccionada:", unidad_id);
+                                                //console.log("Categoria seleccionada:", categoria_id);
+                                                //console.log("Internos:", interna);
+                                                //console.log("Externos:", externa);
+                                                const role_user = $('#role_user').val();
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "{{ route('correspondencia.table') }}",
+                                                    data: {
+                                                        unidad_id: unidad_id,
+                                                        categoria_id: categoria_id,
+                                                        interna: interna,
+                                                        externa: externa
+                                                    },
+                                                    success: function(response) {
+                                                        //console.log(response);
+                                                        $('#table3').DataTable().destroy();
+                                                        $('#table3 tbody').empty();
+                                                        if (role_user == 'A') {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table3 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
+                                                            });
+                                                        } else {
+                                                            $.each(response.data, function(index, value) {
+                                                                //console.log(value.id);
+                                                                $('#table3 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td></td></tr>');
+                                                            });
+                                                        }
+                                                        $('#table3').DataTable();
+                                                    }
+                                                })
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
                                 <table class="table table-bordered" id="table3" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>N°</th>
                                             <th>Codigo</th>
+                                            <th>Unidad</th>
                                             <th>CITE</th>
                                             <th>Referencia</th>
                                             <th>Tipo</th>
                                             <th>Registro</th>
-                                            <th>Gestión</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -320,18 +469,20 @@ $cargos = Cargo::all();
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$documento->codigo}}</td>
+                                            <td>{{Unidad::find($documento->unidades_id)->descrip}}</td>
                                             <td>{{$documento->identificador}}</td>
                                             <td>{{$documento->referencia}}</td>
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
-                                            <td>{{$documento->gestion}}</td>
                                             <td>
+                                                @if(Auth::user()->role == 'A')
                                                 <button class="btn btn-sm btn-info edit" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger anule" type="button" data-id="{{$documento->id}}">
                                                     <i class="bi bi-x-square"></i>
                                                 </button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

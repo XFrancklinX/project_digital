@@ -1,64 +1,53 @@
 @extends('layouts.app')
 
 @section('sidebar-nav')
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li>
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
+
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="active-page-link">
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li>
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="active-page-link">
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -120,7 +109,11 @@ $instituciones = Institucion::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="login.html">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -228,9 +221,11 @@ $instituciones = Institucion::all();
                                                 </td>
                                                 <td>{{ $persona->telefono }}</td>
                                                 <td>
+                                                    @if(Auth::user()->role == 'A')
                                                     <button class="btn btn-sm btn-info edit-personas" type="button" data-id="{{ $persona->id }}">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endif
@@ -262,9 +257,11 @@ $instituciones = Institucion::all();
                                                 <td>{{ $unidad->descrip }}</td>
                                                 <td>{{ $unidad->estado }}</td>
                                                 <td>
+                                                    @if(Auth::user()->role == 'A')
                                                     <button class="btn btn-sm btn-info edit-unidades" type="button" data-id="{{ $unidad->id }}">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -297,9 +294,11 @@ $instituciones = Institucion::all();
                                                 <td>{{ $categoria->sigla }}</td>
                                                 <td>{{ Unidad::find($categoria->unidades_id)->descrip }}</td>
                                                 <td>
+                                                    @if(Auth::user()->role == 'A')
                                                     <button class="btn btn-sm btn-info edit-categorias" type="button" data-id="{{ $categoria->id }}">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -332,9 +331,11 @@ $instituciones = Institucion::all();
                                                 <td>{{ $institucion->ciudad }}</td>
                                                 <td>{{ $institucion->estado }}</td>
                                                 <td>
+                                                    @if(Auth::user()->role == 'A')
                                                     <button class="btn btn-sm btn-info edit-institucions" type="button" data-id="{{ $institucion->id }}">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach

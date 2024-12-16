@@ -66,7 +66,7 @@
 
                             <div class="row">
                                 <div class="col-sm-12 col-12">
-                                    <h5>Información de Acceso <span class="text-muted">Opcional</span></h5>
+                                    <h5>Información de Acceso <span class="text-muted">(Opcional)</span></h5>
                                 </div>
                                 <hr>
 
@@ -105,6 +105,7 @@
                                 </div>
                             </div>
 
+                            @if (Auth::user()->role == 'A')
                             <div class="row">
                                 <div class="col-sm-12 col-12">
                                     <h5>Datos de Acceso <span class="text-muted">(Opcional)</span></h5>
@@ -138,6 +139,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>

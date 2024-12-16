@@ -47,9 +47,21 @@
 </head>
 
 <body>
+    @php
+    use App\Models\Unidad;
+    @endphp
     <div class="page-wrapper">
-        @yield('sidebar-nav')
+        <!-- Sidebar wrapper start -->
+        <nav class="sidebar-wrapper">
 
+            <!-- Sidebar brand starts -->
+            <div class="sidebar-brand">
+                <a href="{{route('dashboard')}}" class="logo">
+                    <img src="images/logoINCOS.png" alt="Principal" class="img-fluid" />
+                </a>
+            </div>
+            @yield('sidebar-nav')
+        </nav>
         <div class="main-container">
             @yield('content')
         </div>
@@ -58,75 +70,132 @@
     @include('includes.js')
     <script>
         $(document).ready(function() {
-            var table = $('.table').DataTable({
+            $('#table1, #table2, #table3, #table4, #table-report').DataTable({
+                searchable: true,
                 autoWidth: false,
+                columnDefs: [{
+                    responsivePriority: 1,
+                    targets: -1
+                }],
                 responsive: true,
+                deferRender: true,
             });
 
-            $('.select-unidad-archivos').select2({
+            $('.slct11, .slct12').select2({
+                width: '100%',
+            });
+            $('.slct21, .slct22').select2({
+                width: '100%',
+            });
+            $('.slct31, .slct32').select2({
                 width: '100%',
             });
 
             $('.unidades-all').on('change', function() {
                 var unidad_id = $(this).val();
                 //console.log(unidad_id);
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ route('correspondencia.table') }}",
-                    data: {
-                        unidad_id: unidad_id
-                    },
-                    success: function(response) {
-                        //console.log(response.data);
-                        $('#table1 tbody').empty();
-                        $.each(response.data, function(index, value) {
-                            console.log(value.id);
-                            $('#table1 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
-                        });
-                    }
-                })
+                if (unidad_id != 0) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('get.categorias') }}",
+                        data: {
+                            unidades_id: unidad_id,
+                        },
+                        success: function(response) {
+                            //console.log("Respuesta:", response);
+
+                            if (response.length > 0) {
+                                $('#archivos_categorias_id').empty();
+                                $('#archivos_categorias_id').append('<option value="0">Seleccionar</option>');
+                                $.each(response, function(index, value) {
+                                    $('#archivos_categorias_id').append('<option value="' + value.id + '">' + (index + 1) + '. ' + value.descrip + '</option>');
+                                });
+
+                            } else {
+                                $('#archivos_categorias_id').html('<option value="0">Seleccionar</option>');
+                            }
+                        }
+                    });
+
+                    $('.categorias-all').on('change', function() {
+                        var categoria_id = $(this).val();
+                        console.log(categoria_id);
+                    });
+                } else {
+                    $('#archivos_categorias_id').html('<option value="0">Seleccionar</option>');
+                }
             });
 
             $('.unidades-interna').on('change', function() {
                 var unidad_id = $(this).val();
                 //console.log(unidad_id);
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ route('correspondencia.table') }}",
-                    data: {
-                        unidad_id: unidad_id,
-                        interna: 1
-                    },
-                    success: function(response) {
-                        //console.log(response.data);
-                        $('#table2 tbody').empty();
-                        $.each(response.data, function(index, value) {
-                            console.log(value.id);
-                            $('#table2 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
-                        });
-                    }
-                })
+                if (unidad_id != 0) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('get.categorias') }}",
+                        data: {
+                            unidades_id: unidad_id,
+                            interna: 1
+                        },
+                        success: function(response) {
+                            //console.log("Respuesta:", response);
+
+                            if (response.length > 0) {
+                                $('#archivos_categorias_id1').empty();
+                                $('#archivos_categorias_id1').append('<option value="0">Seleccionar</option>');
+                                $.each(response, function(index, value) {
+                                    $('#archivos_categorias_id1').append('<option value="' + value.id + '">' + (index + 1) + '. ' + value.descrip + '</option>');
+                                });
+
+                            } else {
+                                $('#archivos_categorias_id1').html('<option value="0">Seleccionar</option>');
+                            }
+                        }
+                    });
+
+                    $('.categorias-interna').on('change', function() {
+                        var categoria_id = $(this).val();
+                        console.log(categoria_id);
+                    });
+                } else {
+                    $('#archivos_categorias_id1').html('<option value="0">Seleccionar</option>');
+                }
             });
 
             $('.unidades-externa').on('change', function() {
                 var unidad_id = $(this).val();
                 //console.log(unidad_id);
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ route('correspondencia.table') }}",
-                    data: {
-                        unidad_id: unidad_id,
-                        externa: 1
-                    },
-                    success: function(response) {
-                        //console.log(response.data);
-                        $('#table3 tbody').empty();
-                        $.each(response.data, function(index, value) {
-                            //console.log(value.id);
-                            $('#table3 tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><button class="btn btn-sm btn-info edit" type="button" data-id="' + value.id + '"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger anule" type="button" data-id="' + value.id + '"><i class="bi bi-x-square"></i></button></td></tr>');
-                        });
-                    }
-                })
+                if (unidad_id != 0) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('get.categorias') }}",
+                        data: {
+                            unidades_id: unidad_id,
+                            externa: 1
+                        },
+                        success: function(response) {
+                            //console.log("Respuesta:", response);
+
+                            if (response.length > 0) {
+                                $('#archivos_categorias_id2').empty();
+                                $('#archivos_categorias_id2').append('<option value="0">Seleccionar</option>');
+                                $.each(response, function(index, value) {
+                                    $('#archivos_categorias_id2').append('<option value="' + value.id + '">' + (index + 1) + '. ' + value.descrip + '</option>');
+                                });
+
+                            } else {
+                                $('#archivos_categorias_id2').html('<option value="0">Seleccionar</option>');
+                            }
+                        }
+                    });
+
+                    $('.categorias-externa').on('change', function() {
+                        var categoria_id = $(this).val();
+                        console.log(categoria_id);
+                    });
+                } else {
+                    $('#archivos_categorias_id2').html('<option value="0">Seleccionar</option>');
+                }
             });
 
             $('#modal-add').on('shown.bs.modal', function() {
@@ -470,11 +539,42 @@
             });
 
             var report_unidad_id = 0;
+            var report_categoria_id = 0;
             var startDate = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2);
             var endDate = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2);
             $('.select-unidad-report').on('change', function() {
                 report_unidad_id = $(this).val();
                 //console.log(report_unidad_id);
+
+                if (report_unidad_id != 0) {
+                    $.ajax({
+                        url: "{{ route('get.categorias') }}",
+                        type: 'GET',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            unidades_id: report_unidad_id,
+                        },
+                        success: function(response) {
+                            if (response.length > 0) {
+                                $('#report_categorias_id').empty();
+                                $('#report_categorias_id').append('<option value="0">Seleccionar</option>');
+                                $.each(response, function(index, value) {
+                                    $('#report_categorias_id').append('<option value="' + value.id + '">' + (index + 1) + '. ' + value.descrip + '</option>');
+                                });
+
+                            } else {
+                                $('#report_categorias_id').html('<option value="0">Seleccionar</option>');
+                            }
+                        },
+                    });
+                } else {
+                    $('.select-categoria-report').html('<option value="0">Seleccionar</option>');
+                }
+            });
+
+            $('.select-categoria-report').on('change', function() {
+                report_categoria_id = $(this).val();
+                //console.log(report_categoria_id);
             });
 
             $('.custom-daterange2').daterangepicker({
@@ -503,20 +603,24 @@
             });
 
             $('#btn-filtrar').on('click', function() {
-                console.log("Fecha de inicio:", startDate);
-                console.log("Fecha de fin:", endDate);
-                console.log("Unidad seleccionada:", report_unidad_id);
+                //console.log("Fecha de inicio:", startDate);
+                //console.log("Fecha de fin:", endDate);
+                //console.log("Unidad seleccionada:", report_unidad_id);
+                //console.log("Categoria seleccionada:", report_categoria_id);
                 $.ajax({
                     url: "{{ route('reportes.data') }}",
                     type: 'GET',
                     data: {
                         _token: '{{ csrf_token() }}',
                         report_unidad_id: report_unidad_id,
+                        report_categoria_id: report_categoria_id,
                         startDate: startDate,
                         endDate: endDate,
                     },
                     success: function(response) {
                         console.log(response.data);
+                        // Mostrar el resultado en la tabla
+                        $('#table-report').DataTable().destroy();
                         // Limpiar el contenido de la tabla
                         $('#table-report tbody').empty();
 
@@ -525,8 +629,19 @@
                             //console.log(index,value);
 
                             // Agregar los datos a la tabla
-                            $('#table-report tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td>' + value.gestion + '</td><td><a href="documents/' + value.archivo + '" target="_blank" class="btn btn-success" role="button" title="Ver Archivo"><i class="bi bi-eye"></i></a>' + '</td></tr>');
+                            $('#table-report tbody').append('<tr><td>' + (index + 1) + '</td><td>' + value.codigo + '</td><td>' + value.descrip + '</td><td>' + value.identificador + '</td><td>' + value.referencia + '</td><td>' + value.tipo_doc + '</td><td>' + value.fecha_reg + '</td><td><a href="documents/' + value.archivo + '" target="_blank" class="btn btn-success" role="button" title="Ver Archivo"><i class="bi bi-eye"></i></a>' + '</td></tr>');
                         })
+                        // Mostrar la tabla
+                        $('#table-report').DataTable({
+                            searchable: true,
+                            autoWidth: false,
+                            columnDefs: [{
+                                responsivePriority: 1,
+                                targets: -1
+                            }],
+                            responsive: true,
+                            deferRender: true,
+                        });
                     },
                     error: function(xhr, status, error) {
                         console.log('Hubo un error en la solicitud.');

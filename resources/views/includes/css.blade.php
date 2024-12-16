@@ -16,3 +16,6 @@
 
 <!-- Date Range CSS -->
 <link rel="stylesheet" href="components/daterange/daterange.css">
+
+<!-- Jquery UI CSS -->
+<script src="js/jquery.min.js"></script>

@@ -1,64 +1,52 @@
 @extends('layouts.app')
 
 @section('sidebar-nav')
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li>
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown active">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}" class="current-page">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li>
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown active">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}" class="current-page">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -122,7 +110,11 @@ $cargos = Cargo::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="login.html">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -190,11 +182,12 @@ $cargos = Cargo::all();
                                         <tr>
                                             <th>N°</th>
                                             <th>Codigo</th>
+                                            <th>Unidad</th>
+                                            <th>Categoria</th>
                                             <th>CITE</th>
                                             <th>Referencia</th>
                                             <th>Tipo</th>
                                             <th>Registro</th>
-                                            <th>Gestión</th>
                                         </tr>
                                     </thead>
 
@@ -203,11 +196,12 @@ $cargos = Cargo::all();
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$documento->codigo}}</td>
+                                            <td>{{Unidad::find($documento->unidades_id)->descrip}}</td>
+                                            <td>{{Categoria::find($documento->categorias_id)->descrip}}</td>
                                             <td>{{$documento->identificador}}</td>
                                             <td>{{$documento->referencia}}</td>
                                             <td>{{$documento->tipo_doc}}</td>
                                             <td>{{$documento->fecha_reg}}</td>
-                                            <td>{{$documento->gestion}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

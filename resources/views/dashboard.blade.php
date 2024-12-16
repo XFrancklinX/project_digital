@@ -1,64 +1,52 @@
 @extends('layouts.app')
 
 @section('sidebar-nav')
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li class="active-page-link">
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li class="active-page-link">
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -114,7 +102,11 @@ $unidades = Unidad::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="login.html">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -132,43 +124,8 @@ $unidades = Unidad::all();
     <!-- Content wrapper start -->
     <div class="content-wrapper">
         <!-- Row start -->
-        <div class="col-sm-12 col-12 d-xxl-flex d-xl-flex d-sm-block">
-            <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
-                <!-- Row start -->
-                <div class="row">
-                    <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
-                        <div class="stats-tile">
-                            <div class="sale-icon-bdr">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                            <div class="sale-details">
-                                <h5>Archivos Totales</h5>
-                                <h3 class="text-blue">{{Documento::count()}}</h3>
-                                <p class="growth text-blue">INTERNA: {{Documento::where('tipo_doc', 'INTERNA')->count()}}</p>
-                                <p class="growth text-blue">EXTERNA: {{Documento::where('tipo_doc', 'EXTERNA')->count()}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    @foreach ($unidades as $data)
-                    <div class="col-xxl-6 col-xl-6 col-sm-6 col-12">
-                        <div class="stats-tile">
-                            <div class="sale-icon-bdr">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                            <div class="sale-details">
-                                <h5>{{$data->descrip}}</h5>
-                                <h3 class="text-blue">{{Documento::where('unidades_id', $data->id)->count()}}</h3>
-                                <p class="growth text-blue">INTERNA: {{Documento::where('unidades_id', $data->id)->where('tipo_doc', 'INTERNA')->count()}}</p>
-                                <p class="growth text-blue">EXTERNA: {{Documento::where('unidades_id', $data->id)->where('tipo_doc', 'EXTERNA')->count()}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="col-xl-6 col-sm-6 col-12 px-2">
+        <div class="row justify-content-center">
+            <div class="px-2 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -177,43 +134,55 @@ $unidades = Unidad::all();
                                     class="active" aria-current="true" aria-label="Slide 1"></button>
                                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
                                     aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block text-black">
-                                        <h5>Primer Slide</h5>
-                                        <p>Contenido del Primer Slide.</p>
+                                    <div class="d-md-flex d-sm-block d-block justify-content-center align-items-center">
+                                        <img src="images/gif/long_banner.gif" class="d-block" alt="" width="100%" height="400px">
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block text-black">
-                                        <h5>Segundo Slide</h5>
-                                        <p>Contenido del Segundo Slide</p>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="images/images.png" class="d-block w-100" alt="Best Admin Dashboards">
-                                    <div class="carousel-caption d-none d-md-block text-black">
-                                        <h5>Tercer Slide</h5>
-                                        <p>Contenido del Tercer Slide</p>
+                                    <div class="d-md-flex d-sm-block d-block justify-content-center align-items-center">
+                                        <img src="images/gif/long_logoINCOS.gif" class="d-block" alt="" width="100%" height="400px">
                                     </div>
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-12 d-xxl-flex d-xl-flex d-sm-block">
+            <div class="row">
+                <div class="col-xxl-4 col-xl-4 col-sm-6 col-12">
+                    <div class="stats-tile">
+                        <div class="sale-icon-bdr">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <div class="sale-details">
+                            <h5>Archivos Totales</h5>
+                            <h3 class="text-blue">{{Documento::count()}}</h3>
+                            <p class="growth text-blue">INTERNA: {{Documento::where('tipo_doc', 'INTERNA')->count()}}</p>
+                            <p class="growth text-blue">EXTERNA: {{Documento::where('tipo_doc', 'EXTERNA')->count()}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach ($unidades as $data)
+                <div class="col-xxl-4 col-xl-4 col-sm-6 col-12">
+                    <div class="stats-tile">
+                        <div class="sale-icon-bdr">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <div class="sale-details">
+                            <h5>{{$data->descrip}}</h5>
+                            <h3 class="text-blue">{{Documento::where('unidades_id', $data->id)->count()}}</h3>
+                            <p class="growth text-blue">INTERNA: {{Documento::where('unidades_id', $data->id)->where('tipo_doc', 'INTERNA')->count()}}</p>
+                            <p class="growth text-blue">EXTERNA: {{Documento::where('unidades_id', $data->id)->where('tipo_doc', 'EXTERNA')->count()}}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

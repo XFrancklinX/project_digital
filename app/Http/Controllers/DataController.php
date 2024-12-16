@@ -46,34 +46,60 @@ class DataController extends Controller
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $unidad_id = $request->input('report_unidad_id');
+        $categoria_id = $request->input('report_categoria_id');
 
-        //dd($request->all(), $startDate, $endDate, DB::table('documentos')->whereBetween('fecha_reg', [$startDate, $endDate])->get());
         // Realizar la consulta en base de datos, dependiendo de tu lógica
-        if ($unidad_id != 0) {
-            $resultados = Documento::where('estado', 'A')->where('unidades_id', $unidad_id)->whereBetween('fecha_reg', [$startDate, $endDate])->get();
+        if ($unidad_id != 0 && $categoria_id != 0) {
+            $resultados = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->where('documentos.unidades_id', $unidad_id)->where('documentos.categorias_id', $categoria_id)->whereBetween('documentos.fecha_reg', [$startDate, $endDate])->get();
         } else {
-            $resultados = Documento::where('estado', 'A')->whereBetween('fecha_reg', [$startDate, $endDate])->get();
+            if ($unidad_id != 0) {
+                $resultados = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->where('documentos.unidades_id', $unidad_id)->whereBetween('documentos.fecha_reg', [$startDate, $endDate])->get();
+            } else {
+                $resultados = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->whereBetween('documentos.fecha_reg', [$startDate, $endDate])->get();
+            }
         }
-
         // Retornar los resultados como respuesta JSON
+        //dd($resultados);
         return response()->json(['data' => $resultados]);
     }
 
     public function correspondencia_table(Request $request)
     {
-        if ($request->unidad_id != 0) {
-            if ($request->interna == 1) {
-                $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'INTERNA')->where('estado', 'A')->get();
+        if ($request->unidad_id == 0 && $request->categoria_id == 0 && $request->interna == 0 && $request->externa == 0) {
+            $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->get();
+        } else {
+            if ($request->unidad_id == 0 && $request->categoria_id == 0 && $request->interna != 0 && $request->externa == 0) {
+                $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->where('documentos.tipo_doc', 'INTERNA')->get();
             } else {
-                if ($request->externa == 1) {
-                    $documentos = Documento::where('unidades_id', $request->unidad_id)->where('tipo_doc', 'EXTERNA')->where('estado', 'A')->get();
+                if ($request->unidad_id == 0 && $request->categoria_id == 0 && $request->interna == 0 && $request->externa != 0) {
+                    $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.estado', 'A')->where('documentos.tipo_doc', 'EXTERNA')->get();
                 } else {
-                    $documentos = Documento::where('unidades_id', $request->unidad_id)->where('estado', 'A')->get();
+                    if ($request->categoria_id != 0) {
+                        if ($request->interna == 1) {
+                            $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.categorias_id', $request->categoria_id)->where('documentos.tipo_doc', 'INTERNA')->where('documentos.estado', 'A')->get();
+                        } else {
+                            if ($request->externa == 1) {
+                                $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.categorias_id', $request->categoria_id)->where('documentos.tipo_doc', 'EXTERNA')->where('documentos.estado', 'A')->get();
+                            } else {
+                                $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.categorias_id', $request->categoria_id)->where('documentos.estado', 'A')->get();
+                            }
+                        }
+                    }
+                    else{
+                        if ($request->interna == 1) {
+                            $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.tipo_doc', 'INTERNA')->where('documentos.estado', 'A')->get();
+                        } else {
+                            if ($request->externa == 1) {
+                                $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.tipo_doc', 'EXTERNA')->where('documentos.estado', 'A')->get();
+                            } else {
+                                $documentos = Documento::join('unidades', 'documentos.unidades_id', '=', 'unidades.id')->select('documentos.*', 'unidades.descrip')->where('documentos.unidades_id', $request->unidad_id)->where('documentos.estado', 'A')->get();
+                            }
+                        }
+                    }
                 }
             }
-        } else {
-            $documentos = Documento::where('estado', 'A')->get();
         }
+
         return response()->json(['data' => $documentos]);
     }
 

@@ -5884,7 +5884,7 @@ fieldset:disabled .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 15%;
+    width: 5%;
     padding: 0;
     color: #fff;
     text-align: center;
@@ -5952,7 +5952,7 @@ fieldset:disabled .btn {
     margin-left: 3px;
     text-indent: -999px;
     cursor: pointer;
-    background-color: #fff;
+    background-color: #4288CE;
     background-clip: padding-box;
     border: 0;
     border-top: 10px solid rgba(0, 0, 0, 0);
@@ -11493,6 +11493,7 @@ body {
     min-height: 100%;
     position: relative;
     background: #f3f2f7;
+    background-color: #d7dae1;
 }
 body:before {
     content: "";
@@ -11502,7 +11503,7 @@ body:before {
     bottom: 0;
     opacity: 0.6;
     width: 70%;
-    background: url(../images/circle.svg);
+    background: none;
     background-position: center 50%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -11841,7 +11842,7 @@ img {
 }
 .sidebar-wrapper .sidebar-brand .logo img {
     max-width: 150px;
-    max-height: 50px;
+    max-height: max-content;
 }
 @keyframes iconUpDown {
     0%,
@@ -14048,6 +14049,8 @@ ul.sales-stats li p span .small {
     align-items: center;
     justify-content: center;
     height: 100%;
+    background: rgb(9,9,121);
+    background: linear-gradient(125deg, rgba(9,9,121,1) 0%, rgba(121,9,49,1) 90%);
 }
 .login-box {
     padding: 30px 20px 30px 20px;
@@ -14066,8 +14069,8 @@ ul.sales-stats li p span .small {
     display: inline-flex;
 }
 .login-box .login-form .login-logo img {
-    width: 70px;
-    height: 70px;
+    /* width: 70px; */
+    /* height: 70px; */
 }
 .login-box .login-form .login-welcome {
     font-size: 1rem;

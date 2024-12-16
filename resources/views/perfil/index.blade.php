@@ -46,64 +46,53 @@
         /* Asegura que la imagen sea redonda */
     }
 </style>
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li class="">
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
+
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li class="">
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -156,7 +145,11 @@ $cargos = Cargo::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="#">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -435,6 +428,7 @@ $cargos = Cargo::all();
                                             </div>
                                         </div>
 
+                                        @if(Auth::user()->role == 'A')
                                         <div class="col-xxl-4 col-sm-6 col-12">
                                             <!-- Change Password -->
                                             <div class="mb-3">
@@ -442,7 +436,9 @@ $cargos = Cargo::all();
                                                 <input type="password" class="form-control" id="password" name="password" placeholder="">
                                             </div>
                                         </div>
+                                        @endif
                                     </div>
+                                    @if(Auth::user()->role == 'A')
                                     <span class="text-end text-success">Para actualizar la información de tu perfil, debes rellenar todos los campos del formulario.</span>
                                     <div class="col-xxl-4 col-lg-5 col-md-6 col-sm-12 col-12">
                                         <div class="account-settings-block">
@@ -453,6 +449,7 @@ $cargos = Cargo::all();
                                         <hr>
                                         <button class="btn btn-success" type="submit">Actualizar Información</button>
                                     </div>
+                                    @endif
                                 </div>
                         </form>
                     </div>

@@ -1,64 +1,52 @@
 @extends('layouts.app')
 
 @section('sidebar-nav')
-<!-- Sidebar wrapper start -->
-<nav class="sidebar-wrapper">
+<!-- Sidebar menu starts -->
+<div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+        <ul>
+            <li>
+                <a href="{{route('dashboard')}}">
+                    <i class="bi bi-house"></i>
+                    <span class="menu-text">Principal</span>
+                </a>
+            </li>
 
-    <!-- Sidebar brand starts -->
-    <div class="sidebar-brand">
-        <a href="{{route('dashboard')}}" class="logo">
-            <img src="images/images.png" alt="Principal" />
-        </a>
+            @if(Auth::user()->role != 'C')
+            <li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="bi bi-stickies"></i>
+                    <span class="menu-text">Digitalización</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="{{route('correspondencia')}}">Archivados</a>
+                        </li>
+                        <li>
+                            <a href="{{route('anulados')}}">Anulados</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{route('gestion')}}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Gestión</span>
+                </a>
+            </li>
+            @endif
+
+            <li class="active-page-link">
+                <a href="{{route('reportes')}}">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <!-- Sidebar brand starts -->
-
-    <!-- Sidebar menu starts -->
-    <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li>
-                    <a href="{{route('dashboard')}}">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Principal</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-stickies"></i>
-                        <span class="menu-text">Digitalización</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{route('correspondencia')}}">Archivados</a>
-                            </li>
-                            <li>
-                                <a href="{{route('anulados')}}">Anulados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="{{route('gestion')}}">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="menu-text">Gestión</span>
-                    </a>
-                </li>
-
-                <li class="active-page-link">
-                    <a href="{{route('reportes')}}">
-                        <i class="bi bi-graph-up"></i>
-                        <span class="menu-text">Reportes</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sidebar menu ends -->
-
-</nav>
+</div>
 @endsection
 @section('content')
 @php
@@ -119,7 +107,11 @@ $instituciones = Institucion::all();
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <a href="{{route('perfil')}}">Perfil</a>
-                        <a href="login.html">Salir</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class=""></i>Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+
+                        </form>
                     </div>
                 </div>
             </li>
@@ -159,6 +151,16 @@ $instituciones = Institucion::all();
                     <div class="col-sm-4 col-12 px-2">
                         <!-- Card start -->
                         <div class="m-0">
+                            <label class="form-label">Categoria</label>
+                            <select class="select-categoria-report js-states form-control select-single" title="Seleccione la Categoria"
+                                data-live-search="true" name="categorias_id" id="report_categorias_id" required="">
+                                <option value="0">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-12 px-2">
+                        <!-- Card start -->
+                        <div class="m-0">
                             <div class="form-label">Rango de fechas</div>
                             <div class="input-group">
 
@@ -181,11 +183,11 @@ $instituciones = Institucion::all();
                                 <tr>
                                     <th>N°</th>
                                     <th>Código</th>
+                                    <th>Unidad</th>
                                     <th>Cite</th>
                                     <th>Referencia</th>
                                     <th>Tipo</th>
                                     <th>Registro</th>
-                                    <th>Gestión</th>
                                     <th>Archivo</th>
                                 </tr>
                             </thead>
