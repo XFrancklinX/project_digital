@@ -64,7 +64,11 @@
         </nav>
         <div class="main-container">
             @yield('content')
+            <div class="app-footer">
+                <span>© FC 2024</span>
+            </div>
         </div>
+
     </div>
 
     @include('includes.js')

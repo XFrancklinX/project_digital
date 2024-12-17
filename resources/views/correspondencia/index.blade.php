@@ -12,7 +12,6 @@
                 </a>
             </li>
 
-            @if(Auth::user()->role != 'C')
             <li class="sidebar-dropdown active">
                 <a href="#">
                     <i class="bi bi-stickies"></i>
@@ -30,6 +29,7 @@
                 </div>
             </li>
 
+            @if(Auth::user()->role != 'C')
             <li>
                 <a href="{{route('gestion')}}">
                     <i class="bi bi-diagram-3"></i>
@@ -160,6 +160,7 @@ $cargos = Cargo::all();
         <!-- Row start -->
         <div class="col-xxl-12 col-xl-12 col-sm-12 col-12">
             <div class="card">
+                @if(Auth::user()->role != 'C')
                 <div class="card-header">
                     <button class="btn btn-info add" id="add" data-bs-toggle="modal"
                         data-bs-target="#modal-add">
@@ -167,6 +168,7 @@ $cargos = Cargo::all();
                         Agregar
                     </button>
                 </div>
+                @endif
                 @include('includes.add')
                 <div class="card-body">
                     <div class="custom-tabs-container">

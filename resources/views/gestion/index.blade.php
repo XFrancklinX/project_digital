@@ -13,7 +13,6 @@
                 </a>
             </li>
 
-            @if(Auth::user()->role != 'C')
             <li class="sidebar-dropdown">
                 <a href="#">
                     <i class="bi bi-stickies"></i>
@@ -30,7 +29,8 @@
                     </ul>
                 </div>
             </li>
-
+            
+            @if(Auth::user()->role != 'C')
             <li class="active-page-link">
                 <a href="{{route('gestion')}}">
                     <i class="bi bi-diagram-3"></i>
